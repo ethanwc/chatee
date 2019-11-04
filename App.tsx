@@ -8,7 +8,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,6 +16,9 @@ import {
   View,
   Text,
   StatusBar,
+  FlatList,
+  TextInput,
+  Button,
 } from 'react-native';
 
 import {
@@ -27,50 +30,72 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const App = () => {
-  const usingHermes = typeof HermesInternal === 'object' && HermesInternal !== null;
+  const usingHermes =
+    typeof HermesInternal === 'object' && HermesInternal !== null;
+
+  const [input, setInput] = useState('');
+
+  const handleButton = () => {};
+
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {!usingHermes ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      {/* <StatusBar barStyle="dark-content" /> */}
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          backgroundColor: 'powderblue',
+        }}
+      />
+
+      <View
+        style={{
+          flex: 17,
+          flexDirection: 'row',
+          backgroundColor: 'yellow',
+        }}>
+        <Text>{input}</Text>
+      </View>
+
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+
+          backgroundColor: 'orange',
+        }}>
+        <Button onPress={() => handleButton()} title="IMG" />
+
+        <View style={{}}>
+          <TextInput
+            multiline={true}
+            style={{height: 40}}
+            placeholder="Enter a message."
+            onChangeText={text => setInput(text)}
+            value={input}
+          />
+        </View>
+
+        <Button onPress={() => handleButton()} title="SND" />
+      </View>
+      {/* <View>
+        <FlatList
+          data={[
+            {key: 'Devin'},
+            {key: 'Dan'},
+            {key: 'Dominic'},
+            {key: 'Jackson'},
+            {key: 'James'},
+            {key: 'Joel'},
+            {key: 'John'},
+            {key: 'Jillian'},
+            {key: 'Jimmy'},
+            {key: 'Julie'},
+          ]}
+          renderItem={({item}) => <Text>{item.key}</Text>}
+        />
+      </View> */}
     </>
   );
 };

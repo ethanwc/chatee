@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-var Pushy = require('pushy-react-native');
+import Pushy from 'pushy-react-native';
 
 import {
   SafeAreaView,
@@ -13,6 +13,7 @@ import {
   Button,
   Platform,
   PermissionsAndroid,
+  Image,
 } from 'react-native';
 
 import {
@@ -22,6 +23,8 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import Login from './components/Login/Login';
 
 // Please place this code in App.js,
 // After the import statements, and before the Component class
@@ -70,16 +73,13 @@ const App = () => {
         }
       });
     }
-
     // Register the device for push notifications
     Pushy.register()
       .then(async (deviceToken: any) => {
         // Display an alert with device token
         console.log('Pushy device token: ' + deviceToken);
-
         // Send the token to your backend server via an HTTP GET request
         //await fetch('https://your.api.hostname/register/device?token=' + deviceToken);
-
         // Succeeded, optionally do something to alert the user
       })
       .catch((err: any) => {
@@ -88,71 +88,20 @@ const App = () => {
       });
   }, []);
 
-  //todo: https://pushy.me/docs/additional-platforms/react-native
-  //parse data, custom icon Pushy.setNotificationIcon('ic_notification');
-
   return (
-    <>
-      {/* <StatusBar barStyle="dark-content" /> */}
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          backgroundColor: 'powderblue',
-        }}
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>test</Text>
+      <Image
+        style={{width: 50, height: 50}}
+        source={require('.src/assets/logo.png')}
       />
-
-      <View
-        style={{
-          flex: 17,
-          flexDirection: 'row',
-          backgroundColor: 'yellow',
-        }}>
-        <Text>{input}</Text>
-      </View>
-
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-
-          backgroundColor: 'orange',
-        }}>
-        <Button onPress={() => handleButton()} title="IMG" />
-
-        <View style={{}}>
-          <TextInput
-            multiline={true}
-            style={{height: 40}}
-            placeholder="Enter a message."
-            onChangeText={text => setInput(text)}
-            value={input}
-          />
-        </View>
-
-        <Button onPress={() => handleButton()} title="SND" />
-      </View>
-      {/* <View>
-        <FlatList
-          data={[
-            {key: 'Devin'},
-            {key: 'Dan'},
-            {key: 'Dominic'},
-            {key: 'Jackson'},
-            {key: 'James'},
-            {key: 'Joel'},
-            {key: 'John'},
-            {key: 'Jillian'},
-            {key: 'Jimmy'},
-            {key: 'Julie'},
-          ]}
-          renderItem={({item}) => <Text>{item.key}</Text>}
-        />
-      </View> */}
-    </>
+    </View>
   );
+
+  // <Login />;
 };
+//todo: https://pushy.me/docs/additional-platforms/react-native
+//parse data, custom icon Pushy.setNotificationIcon('ic_notification');
 
 const styles = StyleSheet.create({
   scrollView: {

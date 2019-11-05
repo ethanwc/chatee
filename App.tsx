@@ -1,14 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
+import React, {useState, useEffect} from 'react';
+var Pushy = require('pushy-react-native');
 
-import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -19,6 +11,8 @@ import {
   FlatList,
   TextInput,
   Button,
+  Platform,
+  PermissionsAndroid,
 } from 'react-native';
 
 import {
@@ -29,6 +23,23 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+// Please place this code in App.js,
+// After the import statements, and before the Component class
+
+Pushy.setNotificationListener(async (data: any) => {
+  // Print notification payload data
+  console.log('Received notification: ' + JSON.stringify(data));
+
+  // Notification title
+  let notificationTitle = 'MyApp';
+
+  // Attempt to extract the "message" property from the payload: {"message":"Hello World!"}
+  let notificationText = data.message || 'Test notification';
+
+  // Display basic system notification
+  Pushy.notify(notificationTitle, notificationText);
+});
+
 const App = () => {
   const usingHermes =
     typeof HermesInternal === 'object' && HermesInternal !== null;
@@ -36,6 +47,49 @@ const App = () => {
   const [input, setInput] = useState('');
 
   const handleButton = () => {};
+
+  useEffect(() => {
+    //todo: modularize
+    Pushy.listen();
+    // Only necessary for Android
+    if (Platform.OS === 'android') {
+      // Check whether the user has granted the app the WRITE_EXTERNAL_STORAGE permission
+      PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      ).then(granted => {
+        if (!granted) {
+          // Request the WRITE_EXTERNAL_STORAGE permission so that the Pushy SDK will be able to persist the device token in the external storage
+          PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          ).then(result => {
+            // User denied permission?
+            if (result !== PermissionsAndroid.RESULTS.GRANTED) {
+              // Possibly ask the user to grant the permission
+            }
+          });
+        }
+      });
+    }
+
+    // Register the device for push notifications
+    Pushy.register()
+      .then(async (deviceToken: any) => {
+        // Display an alert with device token
+        console.log('Pushy device token: ' + deviceToken);
+
+        // Send the token to your backend server via an HTTP GET request
+        //await fetch('https://your.api.hostname/register/device?token=' + deviceToken);
+
+        // Succeeded, optionally do something to alert the user
+      })
+      .catch((err: any) => {
+        // Handle registration errors
+        console.error(err);
+      });
+  }, []);
+
+  //todo: https://pushy.me/docs/additional-platforms/react-native
+  //parse data, custom icon Pushy.setNotificationIcon('ic_notification');
 
   return (
     <>

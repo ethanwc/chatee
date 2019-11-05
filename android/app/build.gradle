@@ -182,6 +182,12 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
+    // Pushy SDK for Android
+    compile 'me.pushy:sdk:1.0.53'
+
+    // Pushy SDK for React Native Android
+    compile 'me.pushy:sdk-react-native:1.0.11'
+
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")

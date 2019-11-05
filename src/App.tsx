@@ -14,6 +14,7 @@ import {
   Platform,
   PermissionsAndroid,
   Image,
+  Alert,
 } from 'react-native';
 
 import {
@@ -88,12 +89,44 @@ const App = () => {
       });
   }, []);
 
+  // const styles = StyleSheet.create(
+  //     fontFamily: 'PT Sans Narrow', 'sans-serif';
+
+  // });
+
+  const styles = StyleSheet.create({
+    baseText: {
+      fontFamily: 'Cochin',
+      fontSize: 40,
+    },
+    titleText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+  });
+
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>test</Text>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#D5E8E4',
+      }}>
       <Image
-        style={{width: 50, height: 50}}
-        source={require('.src/assets/logo.png')}
+        style={{width: 200, height: 200}}
+        source={require('./assets/logo.png')}
+      />
+      <Text style={styles.baseText}>Log In</Text>
+      <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}>
+        Username
+      </TextInput>
+      <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}>
+        Password
+      </TextInput>
+      <Button
+        title="Press me"
+        onPress={() => Alert.alert('Cannot press this one')}
       />
     </View>
   );

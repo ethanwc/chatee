@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import LoginView from '../../containers/Login/LoginView';
-import {Alert} from 'react-native';
+import {Alert, Vibration} from 'react-native';
 
 /**
  * Login controller for application.
  * Handles login, and allows user to save info for auto login
  */
-const Login = () => {
+const Login = (props: any) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -16,11 +16,13 @@ const Login = () => {
    */
   const handleLogin = () => {
     //todo: axios post req to /auth/login use userName, Password
-    Alert.alert(username, password);
+    Vibration.vibrate(1000);
+    // Alert.alert(username, password);
   };
 
   return (
     <LoginView
+      navigation={props.navigation}
       username={username}
       setUsername={setUsername}
       password={password}

@@ -8,6 +8,9 @@ import {
   CheckBox,
   Text,
   ActivityIndicator,
+  Vibration,
+  Animated,
+  Easing,
 } from 'react-native';
 
 const Login = (props: any) => {
@@ -22,11 +25,32 @@ const Login = (props: any) => {
     },
   });
 
+  let spinvalue = new Animated.Value(0);
+
+  let loginanimation = Animated.loop(
+    Animated.timing(spinvalue, {
+      toValue: 1,
+      duration: 3000,
+      easing: Easing.inOut(Easing.cubic),
+      useNativeDriver: true,
+    }),
+  );
+
+  let spin = spinvalue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '1800deg'],
+  });
+
+  const handleLogin = () => {
+    loginanimation.start();
+    props.handleLogin();
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: '#D5E8E4'}}>
       <View style={{flex: 4, alignItems: 'center', justifyContent: 'center'}}>
-        <Image
-          style={{width: 200, height: 200}}
+        <Animated.Image
+          style={{transform: [{rotate: spin}]}}
           source={require('../../assets/logo.png')}
         />
       </View>
@@ -58,7 +82,12 @@ const Login = (props: any) => {
           <Button
             color="#528F7D"
             title="Sign In"
-            onPress={() => props.handleLogin()}
+            onPress={() => handleLogin()}
+          />
+          <Button
+            color="#528F7D"
+            title="Otherbuitton"
+            onPress={() => props.navigation.navigate('Conversation')}
           />
         </View>
         <View

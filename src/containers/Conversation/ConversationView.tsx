@@ -9,7 +9,7 @@ const Chat = () => {
         style={{
           flex: 1,
           flexDirection: 'row',
-          backgroundColor: 'powderblue',
+          backgroundColor: 'yellow',
         }}
       />
 

@@ -1,0 +1,6 @@
+{
+    "base" : "chatee-api.azurewebsites.net",
+    "auth": "auth",
+    "login" : "login",
+    "register" : "register"
+}

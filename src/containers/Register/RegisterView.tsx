@@ -10,7 +10,7 @@ import {
   Easing,
 } from 'react-native';
 
-const Login = (props: any) => {
+const Register = (props: any) => {
   const styles = StyleSheet.create({
     baseText: {
       fontFamily: 'Cochin',
@@ -24,7 +24,7 @@ const Login = (props: any) => {
 
   let spinvalue = new Animated.Value(0);
 
-  let loginanimation = Animated.loop(
+  let registeranimation = Animated.loop(
     Animated.timing(spinvalue, {
       toValue: 1,
       duration: 3000,
@@ -35,12 +35,12 @@ const Login = (props: any) => {
 
   let spin = spinvalue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '1800deg'],
+    outputRange: ['0deg', '-1800deg'],
   });
 
-  const handleLogin = () => {
-    loginanimation.start();
-    props.handleLogin();
+  const handleRegister = () => {
+    registeranimation.start();
+    props.handleRegister();
   };
 
   return (
@@ -52,6 +52,26 @@ const Login = (props: any) => {
         />
       </View>
       <View style={{flex: 5}}>
+        <TextInput
+          style={{
+            height: 40,
+            margin: 10,
+            marginBottom: 0,
+            borderColor: '#528F7D',
+            borderWidth: 1,
+          }}
+          placeholder="First Name"
+        />
+        <TextInput
+          style={{
+            height: 40,
+            margin: 10,
+            marginBottom: 0,
+            borderColor: '#528F7D',
+            borderWidth: 1,
+          }}
+          placeholder="Last Name"
+        />
         <TextInput
           style={{
             height: 40,
@@ -78,13 +98,8 @@ const Login = (props: any) => {
         <View style={{marginLeft: 10, marginRight: 10}}>
           <Button
             color="#528F7D"
-            title="Sign In"
-            onPress={() => handleLogin()}
-          />
-          <Button
-            color="#528F7D"
-            title="Otherbutton"
-            onPress={() => props.navigation.navigate('Conversation')}
+            title="Sign Up"
+            onPress={() => handleRegister()}
           />
         </View>
         <View
@@ -100,11 +115,11 @@ const Login = (props: any) => {
               value={props.remember}
               onValueChange={() => props.setRemember(!props.remember)}
             />
-            <Text>Remember Login</Text>
+            <Text>Remember Register</Text>
           </View>
           <View>
-            <Text onPress={() => props.navigation.navigate('Register')}>
-              New User?
+            <Text onPress={() => props.navigation.navigate('Login')}>
+              Already Registered?
             </Text>
           </View>
         </View>
@@ -113,4 +128,4 @@ const Login = (props: any) => {
   );
 };
 
-export default Login;
+export default Register;

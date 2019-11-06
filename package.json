@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@react-native-community/checkbox": "^0.2.1",
+    "@types/axios": "^0.14.0",
     "@types/react-native-elements": "^0.18.0",
+    "axios": "^0.19.0",
     "pushy-react-native": "^1.0.10",
     "react": "16.9.0",
     "react-native": "0.61.3",

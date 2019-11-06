@@ -1,60 +1,26 @@
 import React from 'react';
-import {View, TextInput} from 'react-native';
+import {View, TextInput, FlatList, Text} from 'react-native';
 
-const Chat = () => {
+const Conversation = () => {
   return (
-    <>
-      {/* <StatusBar barStyle="dark-content" /> */}
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          backgroundColor: 'yellow',
-        }}
+    <View style={{flex: 10}}>
+      <FlatList
+        data={[
+          {key: 'Devin'},
+          {key: 'Dan'},
+          {key: 'Dominic'},
+          {key: 'Jackson'},
+          {key: 'James'},
+          {key: 'Joel'},
+          {key: 'John'},
+          {key: 'Jillian'},
+          {key: 'Jimmy'},
+          {key: 'Julie'},
+        ]}
+        renderItem={({item}) => <Text>{item.key}</Text>}
       />
-
-      <View
-        style={{
-          flex: 17,
-          flexDirection: 'row',
-          backgroundColor: 'yellow',
-        }}></View>
-
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-
-          backgroundColor: 'orange',
-        }}>
-        <View style={{}}>
-          <TextInput
-            multiline={true}
-            style={{height: 40}}
-            placeholder="Enter a message."
-          />
-        </View>
-      </View>
-      {/* <View>
-              <FlatList
-                data={[
-                  {key: 'Devin'},
-                  {key: 'Dan'},
-                  {key: 'Dominic'},
-                  {key: 'Jackson'},
-                  {key: 'James'},
-                  {key: 'Joel'},
-                  {key: 'John'},
-                  {key: 'Jillian'},
-                  {key: 'Jimmy'},
-                  {key: 'Julie'},
-                ]}
-                renderItem={({item}) => <Text>{item.key}</Text>}
-              />
-            </View> */}
-    </>
+    </View>
   );
 };
 
-export default Chat;
+export default Conversation;

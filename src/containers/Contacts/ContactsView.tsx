@@ -3,6 +3,9 @@ import ContactView from './ContactView';
 import {FlatList, View} from 'react-native';
 import {Contact} from '../../styles';
 
+/**
+ * UI for all contacts
+ */
 const ContactsView = () => {
   return (
     <View style={Contact.ContactPreview.Wrapper}>

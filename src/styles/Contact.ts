@@ -1,6 +1,9 @@
 import {StyleSheet} from 'react-native';
 import Colors from './Colors';
 
+/**
+ * Styling for contact preview
+ */
 export const ContactPreview = StyleSheet.create({
   Image: {
     width: 100,

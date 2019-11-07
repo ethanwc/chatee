@@ -4,6 +4,9 @@ import ChatView from './ChatView';
 import {FlatList} from 'react-native-gesture-handler';
 import {Chat} from '../../styles';
 
+/**
+ * UI wrapper for all chats
+ */
 const ChatsView = () => {
   return (
     //todo: map all chats...

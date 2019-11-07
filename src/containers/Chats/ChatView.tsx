@@ -1,6 +1,11 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import {Chat} from '../../styles';
+
+/**
+ * UI for a chat
+ * @param props 
+ */
 const ChatView = (props: any) => {
   const name = 'Steve Jobs';
   const message = 'What do you mean?';

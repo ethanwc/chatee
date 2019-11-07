@@ -10,18 +10,10 @@ import {
   Easing,
 } from 'react-native';
 
+/**
+ * UI for login page
+ */
 const Login = (props: any) => {
-  const styles = StyleSheet.create({
-    baseText: {
-      fontFamily: 'Cochin',
-      fontSize: 40,
-    },
-    titleText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
-  });
-
   let spinvalue = new Animated.Value(0);
 
   let loginanimation = Animated.loop(

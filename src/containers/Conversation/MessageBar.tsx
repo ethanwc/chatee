@@ -1,9 +1,12 @@
 import React from 'react';
-import {View, Button, Alert} from 'react-native';
+import {View} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import {Icon} from 'react-native-elements';
 import {Chat} from '../../styles';
 
+/**
+ * UI for message bar in the conversation view
+ */
 const MessageBar = () => {
   return (
     <View style={Chat.Bar.Wrapper}>

@@ -1,8 +1,10 @@
 import React from 'react';
 import {View, Image, Text} from 'react-native';
 import {Contact} from '../../styles';
-import {Icon} from 'react-native-elements';
 
+/**
+ * UI for a contact
+ */
 const ContactView = (props: any) => {
   const name = 'Steve Jobs';
   return (

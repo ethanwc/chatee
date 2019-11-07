@@ -2,7 +2,6 @@ import React from 'react';
 import {
   TextInput,
   View,
-  StyleSheet,
   Button,
   CheckBox,
   Text,
@@ -10,18 +9,10 @@ import {
   Easing,
 } from 'react-native';
 
+/**
+ * UI for register page
+ */
 const Register = (props: any) => {
-  const styles = StyleSheet.create({
-    baseText: {
-      fontFamily: 'Cochin',
-      fontSize: 40,
-    },
-    titleText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-    },
-  });
-
   let spinvalue = new Animated.Value(0);
 
   let registeranimation = Animated.loop(

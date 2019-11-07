@@ -1,9 +1,12 @@
 import React from 'react';
-import {View, Vibration} from 'react-native';
+import {View} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Chat} from '../../styles';
 
-const Controllbar = (props: any) => {
+/**
+ * UI for top control bar in conversation
+ */
+const Controlbar = (props: any) => {
   return (
     <View style={Chat.Bar.Wrapper}>
       <View style={Chat.Bar.IconWrapper}>
@@ -21,4 +24,4 @@ const Controllbar = (props: any) => {
   );
 };
 
-export default Controllbar;
+export default Controlbar;

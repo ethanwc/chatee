@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
+import ProfileView from '../../containers/Profile/ProfileView';
 
+/**
+ * Profile controller.
+ * Handles showing own profile, and all others.
+ */
 const Profile = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+  return <ProfileView />;
+};
 
-export default Profile
+export default Profile;

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import LoginView from '../../containers/Login/LoginView';
-import {Alert, Vibration, AsyncStorage} from 'react-native';
+import {Vibration, AsyncStorage} from 'react-native';
 import Endpoints from '../../assets/endpoints.json';
 import Axios from 'axios';
 /**

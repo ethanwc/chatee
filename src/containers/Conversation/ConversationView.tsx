@@ -1,26 +1,19 @@
 import React from 'react';
-import {View, TextInput, FlatList, Text} from 'react-native';
+import {View, Text} from 'react-native';
+import {Chat} from '../../styles';
 
-const Conversation = () => {
+const ConversationView = (props: any) => {
+  const name = 'Steve Jobs';
+  const message = 'I really think Microsoft is a better place to work.';
+  const time = new Date().toTimeString();
   return (
-    <View style={{flex: 10}}>
-      <FlatList
-        data={[
-          {key: 'Devin'},
-          {key: 'Dan'},
-          {key: 'Dominic'},
-          {key: 'Jackson'},
-          {key: 'James'},
-          {key: 'Joel'},
-          {key: 'John'},
-          {key: 'Jillian'},
-          {key: 'Jimmy'},
-          {key: 'Julie'},
-        ]}
-        renderItem={({item}) => <Text>{item.key}</Text>}
-      />
+    <View style={Chat.Conversation.Content}>
+      <Text style={Chat.Conversation.HeaderText}>{name}</Text>
+      <Text style={Chat.Conversation.TimeText}>{time}</Text>
+
+      <Text style={Chat.Conversation.BodyText}>{message}</Text>
     </View>
   );
 };
 
-export default Conversation;
+export default ConversationView;

@@ -31,12 +31,9 @@ const Login = (props: any) => {
       if (data.status === 200) {
         await AsyncStorage.setItem('JWT', data.token);
         props.navigation.navigate('Chats');
-        //todo: go to main app
-        console.log(data);
       } else Vibration.vibrate(1000);
     }
   };
-
 
   //todo: check if user has info saved... if so handle login early
   //todo: display wrong info msg...

@@ -1,35 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import Pushy from 'pushy-react-native';
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  FlatList,
-  TextInput,
-  Button,
-  Platform,
-  PermissionsAndroid,
-  Image,
-  Alert,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Chats from './components/Chats/Chats';
+import Contacts from './components/Contacts/Contacts';
 import Conversation from './components/Conversation/Conversation';
-
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
@@ -74,6 +50,15 @@ const AppNavigator = createStackNavigator({
       header: null,
     },
   },
+
+  Contacts: {
+    screen: Contacts,
+
+    navigationOptions: {
+      header: null,
+    },
+  },
+
   Conversation: {
     screen: Conversation,
 

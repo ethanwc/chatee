@@ -36,6 +36,8 @@ target 'chatee' do
 
   pod 'PushyRN', :path => '../node_modules/pushy-react-native'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'chateeTests' do
     inherit! :search_paths
     # Pods for testing

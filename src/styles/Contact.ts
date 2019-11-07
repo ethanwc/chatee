@@ -1,25 +1,35 @@
 import {StyleSheet} from 'react-native';
+import Colors from './Colors';
 
 export const ContactPreview = StyleSheet.create({
   Image: {
-    width: 75,
-    height: 75,
+    width: 100,
+    height: 100,
   },
 
   Wrapper: {
+    backgroundColor: Colors.mint,
+    flex: 1,
+  },
+
+  Content: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     margin: 5,
   },
 
   HeaderText: {
-    fontSize: 40,
-    color: 'blue',
+    fontSize: 50,
+    color: Colors.cyan,
+    alignSelf: 'center',
   },
 
   BodyText: {
-    fontSize: 20,
-    color: 'blue',
+    fontSize: 15,
+    color: Colors.darkblue,
+  },
+
+  Icon: {
+    color: Colors.cyan,
   },
 });

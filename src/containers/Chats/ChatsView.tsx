@@ -2,17 +2,14 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import ChatView from './ChatView';
 import {FlatList} from 'react-native-gesture-handler';
+import {Chat} from '../../styles';
 
 const ChatsView = () => {
   return (
     //todo: map all chats...
     //todo: search feature
 
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-      }}>
+    <View style={Chat.Chats.Wrapper}>
       <FlatList
         data={[
           {key: 'Devin'},

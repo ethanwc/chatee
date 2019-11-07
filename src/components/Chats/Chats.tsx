@@ -4,7 +4,7 @@ import ChatsView from '../../containers/Chats/ChatsView';
 /**
  * Controller for chats
  */
-const Chats = () => {
+const Chats = (props: any) => {
   return <ChatsView />;
 };
 

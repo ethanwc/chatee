@@ -1,8 +1,9 @@
 import * as Typography from './Typography';
-import * as Chat from './Chat';
+import * as Chats from './Chats';
+import * as Conversation from './Conversation';
 import * as Contact from './Contact';
 
 /**
  * Helps organize styles
  */
-export {Typography, Chat, Contact};
+export {Typography, Chats, Conversation, Contact};

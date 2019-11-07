@@ -30,7 +30,7 @@ const Login = (props: any) => {
     if (data) {
       if (data.status === 200) {
         await AsyncStorage.setItem('JWT', data.token);
-        props.navigation.navigate('Chats');
+        props.navigation.navigate('Holder');
       } else Vibration.vibrate(1000);
     }
   };

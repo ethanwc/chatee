@@ -73,22 +73,6 @@ const Login = (props: any) => {
             title="Sign In"
             onPress={() => handleLogin()}
           />
-
-          <Button
-            color="#528F7D"
-            title="Chats"
-            onPress={() => props.navigation.navigate('Chats')}
-          />
-          <Button
-            color="#528F7D"
-            title="Conversation"
-            onPress={() => props.navigation.navigate('Conversation')}
-          />
-          <Button
-            color="#528F7D"
-            title="Contacts"
-            onPress={() => props.navigation.navigate('Contacts')}
-          />
         </View>
         <View
           style={{

@@ -4,15 +4,15 @@ import {Icon} from 'react-native-elements';
 import {Chats} from '../../styles';
 
 /**
- * UI for top control bar in conversation
+ * UI for top control bar
  */
 const Controlbar = (props: any) => {
   return (
     <View style={Chats.Bar.Wrapper}>
       <View style={Chats.Bar.IconWrapper}>
         <Icon
-          onPress={() => props.navigation.goBack()}
-          name="arrow-back"
+          onPress={() => props.toggleMenu()}
+          name="menu"
           size={40}
           color={Chats.Bar.Icon.color}
         />

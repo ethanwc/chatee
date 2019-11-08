@@ -10,7 +10,7 @@ import Contacts from '../Contacts/Contacts';
  */
 const Holder = (props: any) => {
   //show menu if true
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
   //active child is either chats(false) or contacts(true)
   const [activeChild, setActiveChild] = useState(false);
 

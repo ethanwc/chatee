@@ -26,7 +26,10 @@ const Controlbar = (props: any) => {
       />
     ) : null;
 
-  const title = !props.showMenu && !props.isMain ? <Text>asdf</Text> : null;
+  const title =
+    !props.showMenu && !props.isMain ? (
+      <Text style={Control.Bar.HeaderText}>Example Title</Text>
+    ) : null;
   return (
     <View style={Control.Bar.Wrapper}>
       <View style={Control.Bar.IconWrapper}>{menu}</View>

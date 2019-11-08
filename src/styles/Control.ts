@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import Colors from './Colors';
+import {colors} from 'react-native-elements';
 
 /**
  * Styling for control bar contents
@@ -56,6 +57,12 @@ export const Bar = StyleSheet.create({
   IconWrapper: {
     justifyContent: 'center',
     flexDirection: 'row',
+  },
+
+  HeaderText: {
+    fontSize: 25,
+    color: Colors.cyan,
+    alignSelf: 'center',
   },
 
   ChatInput: {

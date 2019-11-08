@@ -6,8 +6,8 @@ import Colors from './Colors';
  */
 export const ContactPreview = StyleSheet.create({
   Image: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
 
   Wrapper: {
@@ -22,9 +22,9 @@ export const ContactPreview = StyleSheet.create({
   },
 
   HeaderText: {
-    fontSize: 50,
+    fontSize: 40,
     color: Colors.cyan,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
   },
 
   BodyText: {

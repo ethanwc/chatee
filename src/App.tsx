@@ -6,6 +6,7 @@ import Register from './components/Register/Register';
 import Chats from './components/Chats/Chats';
 import Contacts from './components/Contacts/Contacts';
 import Conversation from './components/Conversation/Conversation';
+import Profile from './components/Profile/Profile';
 import Holder from './components/Holder/Holder';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -62,6 +63,14 @@ const AppNavigator = createStackNavigator({
 
   Contacts: {
     screen: Contacts,
+
+    navigationOptions: {
+      header: null,
+    },
+  },
+
+  Profile: {
+    screen: Profile,
 
     navigationOptions: {
       header: null,

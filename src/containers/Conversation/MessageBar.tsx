@@ -21,7 +21,7 @@ const MessageBar = () => {
           multiline={true}
           placeholder="Enter a message"
           placeholderTextColor={Control.Bar.ChatInput.color}
-          style={{flexWrap: 'wrap'}}
+          style={Control.Bar.Input}
         />
       </View>
       <View style={{flex: 1}}>

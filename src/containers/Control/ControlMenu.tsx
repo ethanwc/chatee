@@ -12,6 +12,20 @@ const ControlMenu = (props: any) => {
       <View style={Control.Content.Wrapper}>
         <TouchableNativeFeedback
           onPress={() => {
+            props.navigation.navigate('Profile');
+          }}>
+          <View style={Control.Content.IconWrapper}>
+            <Icon
+              name="account-circle"
+              size={40}
+              color={Control.Content.Icon.color}
+            />
+            <Text style={Control.Content.Description}>Account</Text>
+          </View>
+        </TouchableNativeFeedback>
+
+        <TouchableNativeFeedback
+          onPress={() => {
             props.setActiveChild(true);
             props.toggleMenu();
           }}>
@@ -48,10 +62,21 @@ const ControlMenu = (props: any) => {
         </TouchableNativeFeedback>
       </View>
 
-      <TouchableNativeFeedback onPress={() => Alert.alert('pressed')}>
+      <TouchableNativeFeedback onPress={() => Alert.alert('info')}>
         <View style={Control.Content.IconWrapper}>
           <Icon name="info" size={40} color={Control.Content.Icon.color} />
           <Text style={Control.Content.Description}>Info</Text>
+        </View>
+      </TouchableNativeFeedback>
+
+      <TouchableNativeFeedback onPress={() => props.navigation.goBack()}>
+        <View style={Control.Content.IconWrapper}>
+          <Icon
+            name="exit-to-app"
+            size={40}
+            color={Control.Content.Icon.color}
+          />
+          <Text style={Control.Content.Description}>Logout</Text>
         </View>
       </TouchableNativeFeedback>
     </View>

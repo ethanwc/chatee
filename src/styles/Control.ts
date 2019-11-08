@@ -69,4 +69,9 @@ export const Bar = StyleSheet.create({
     color: Colors.darkblue,
     flexWrap: 'wrap',
   },
+
+  Input: {
+    flexWrap: 'wrap',
+    backgroundColor: Colors.snow,
+  },
 });

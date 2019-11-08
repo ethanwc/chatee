@@ -1,11 +1,15 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Image} from 'react-native';
 
 /**
  * View for displaying profile information.
  */
 const ProfileView = () => {
-  return <View></View>;
+  return (
+    <View>
+      <Image source={require('../../assets/logo.png')} />
+    </View>
+  );
 };
 
 export default ProfileView;

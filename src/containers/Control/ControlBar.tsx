@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Control} from '../../styles';
 
@@ -19,7 +19,7 @@ const Controlbar = (props: any) => {
   const search =
     !props.showMenu && !props.isMain ? (
       <Icon
-        onPress={() => props.toggleMenu()}
+        onPress={() => Alert.alert('search')}
         name="search"
         size={40}
         color={Control.Bar.Icon.color}

@@ -7,7 +7,7 @@ import {Chats} from '../../styles';
 /**
  * UI wrapper for all chats
  */
-const ChatsView = () => {
+const ChatsView = (props: any) => {
   return (
     //todo: map all chats...
     //todo: search feature
@@ -26,7 +26,9 @@ const ChatsView = () => {
           {key: 'Jimmy'},
           {key: 'Julie'},
         ]}
-        renderItem={({item}) => <ChatView test={item.key}></ChatView>}
+        renderItem={({item}) => (
+          <ChatView test={item.key} navigation={props.navigation} />
+        )}
       />
     </View>
   );

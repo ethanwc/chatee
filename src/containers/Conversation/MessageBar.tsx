@@ -2,17 +2,17 @@ import React from 'react';
 import {View} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import {Icon} from 'react-native-elements';
-import {Chat} from '../../styles';
+import {Control} from '../../styles';
 
 /**
  * UI for message bar in the conversation view
  */
 const MessageBar = () => {
   return (
-    <View style={Chat.Bar.Wrapper}>
+    <View style={Control.Bar.Wrapper}>
       <View style={{flex: 1}}>
-        <View style={Chat.Bar.IconWrapper}>
-          <Icon name="add" size={40} color={Chat.Bar.Icon.color} />
+        <View style={Control.Bar.IconWrapper}>
+          <Icon name="add" size={40} color={Control.Bar.Icon.color} />
         </View>
       </View>
 
@@ -20,12 +20,12 @@ const MessageBar = () => {
         <TextInput
           multiline={true}
           placeholder="Enter a message"
-          placeholderTextColor={Chat.Bar.ChatInput.color}
+          placeholderTextColor={Control.Bar.ChatInput.color}
           style={{flexWrap: 'wrap'}}
         />
       </View>
       <View style={{flex: 1}}>
-        <Icon name="send" size={40} color={Chat.Bar.Icon.color} />
+        <Icon name="send" size={40} color={Control.Bar.Icon.color} />
       </View>
     </View>
   );

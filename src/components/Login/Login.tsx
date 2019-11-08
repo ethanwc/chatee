@@ -26,31 +26,15 @@ const Login = (props: any) => {
     const data = res.data;
 
     if (data) {
-      const userInfo = {
-        email: data.email,
-        chats: data.chats,
-      };
-
-      Alert.alert(userInfo.email);
-
-      // console.log(data);
-      // Alert.alert(data);
-      // if (data.status === 200) {
-      // }
-
-      /**
-       *    "chats": [],
-    "chatRequests": [],
-    "friends": [],
-    "incomingFriendRequests": [],
-    "outgoingFriendRequests": [],
-    "email": "ethan@mail.com"
-       */
+      await AsyncStorage.setItem('USER', data.email);
+      props.navigation.navigate('Holder', {
+        userinfo: data,
+      });
     }
   };
 
   /**
-   * Attempts login request to backend.
+   * Attempts login request to backend. If successfull, get user info and go to
    */
   const handleLogin = async () => {
     const userInfo = {
@@ -60,14 +44,15 @@ const Login = (props: any) => {
 
     let res = await Axios.post(login_endpoint, userInfo);
 
-    //todo: stop spinning
     const data = res.data;
     if (data) {
       if (data.status === 200) {
         await AsyncStorage.setItem('JWT', data.token);
         getUserInfo();
-        // props.navigation.navigate('Holder');
-      } else Vibration.vibrate(1000);
+      } else {
+        Alert.alert('Login Failed', data.message);
+        Vibration.vibrate(1000);
+      }
     }
   };
 

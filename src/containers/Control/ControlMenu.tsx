@@ -7,12 +7,16 @@ import {Control} from '../../styles';
  * UI for control contents, basically a menu.
  */
 const ControlMenu = (props: any) => {
+  const userinfo = props.navigation.getParam('userinfo');
   return (
     <View style={Control.Content.Wrapper}>
       <View style={Control.Content.Wrapper}>
         <TouchableNativeFeedback
           onPress={() => {
-            props.navigation.navigate('Profile');
+            props.navigation.navigate('Profile', {
+              userinfo: userinfo,
+            });
+            props.toggleMenu();
           }}>
           <View style={Control.Content.IconWrapper}>
             <Icon
@@ -20,7 +24,7 @@ const ControlMenu = (props: any) => {
               size={40}
               color={Control.Content.Icon.color}
             />
-            <Text style={Control.Content.Description}>Account</Text>
+            <Text style={Control.Content.Description}>Profile</Text>
           </View>
         </TouchableNativeFeedback>
 

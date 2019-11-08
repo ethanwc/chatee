@@ -6,8 +6,9 @@ import Colors from './Colors';
  */
 export const ContactPreview = StyleSheet.create({
   Image: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
+    marginRight: 5,
   },
 
   Wrapper: {
@@ -17,7 +18,7 @@ export const ContactPreview = StyleSheet.create({
 
   Content: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     margin: 5,
   },
 

@@ -16,7 +16,7 @@ const Contacts = (props: any) => {
         showMenu={props.showMenu}
         isMain={false}
       />
-      <ContactsView />
+      <ContactsView navigation={props.navigation} />
     </View>
   );
 };

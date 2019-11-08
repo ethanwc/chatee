@@ -47,7 +47,7 @@ export const Bar = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
     backgroundColor: Colors.darkblue,
-    // borderWidth: 1,
+    borderBottomWidth: 2
   },
 
   Icon: {

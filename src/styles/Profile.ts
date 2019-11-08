@@ -6,16 +6,26 @@ import Colors from './Colors';
  */
 export const ProfileView = StyleSheet.create({
   Image: {
-    width: 80,
-    height: 80,
+    width: 300,
+    height: 300,
   },
 
-  Wrapper: {
+  Wrapper1: {
     backgroundColor: Colors.mint,
     flex: 1,
   },
 
+  Wrapper2: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignContent: 'center',
+    flexDirection: 'column',
+    backgroundColor: Colors.darkblue,
+    // borderWidth: 1,
+  },
+
   Content: {
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     margin: 5,
@@ -24,12 +34,26 @@ export const ProfileView = StyleSheet.create({
   HeaderText: {
     fontSize: 40,
     color: Colors.cyan,
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
   },
 
   BodyText: {
-    fontSize: 15,
+    fontSize: 25,
     color: Colors.darkblue,
+  },
+
+  Description: {
+    fontSize: 20,
+    color: Colors.mint,
+  },
+
+  EditBox: {
+    fontSize: 25,
+    color: Colors.darkblue,
+    backgroundColor: Colors.mint,
+    alignSelf: 'stretch',
+    textAlign: 'center',
+    margin: 10
   },
 
   Icon: {

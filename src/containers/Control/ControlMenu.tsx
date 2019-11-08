@@ -66,7 +66,7 @@ const ControlMenu = (props: any) => {
         </TouchableNativeFeedback>
       </View>
 
-      <TouchableNativeFeedback onPress={() => Alert.alert('info')}>
+      <TouchableNativeFeedback onPress={() => props.navigation.navigate("Info")}>
         <View style={Control.Content.IconWrapper}>
           <Icon name="info" size={40} color={Control.Content.Icon.color} />
           <Text style={Control.Content.Description}>Info</Text>

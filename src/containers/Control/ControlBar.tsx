@@ -33,7 +33,7 @@ const Controlbar = (props: any) => {
   return (
     <View style={Control.Bar.Wrapper}>
       <View style={Control.Bar.IconWrapper}>{menu}</View>
-      <View style={Control.Bar.IconWrapper}>{title}</View>
+      {/* <View style={Control.Bar.IconWrapper}>{title}</View> */}
 
       <View style={Control.Bar.IconWrapper}>{search}</View>
     </View>

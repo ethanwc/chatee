@@ -1,13 +1,23 @@
 import React, {useState} from 'react';
+import Endpoints from '../../assets/endpoints.json';
 import ProfileView from '../../containers/Profile/ProfileView';
 import EditBar from '../../containers/Control/EditBar';
 import {View, AsyncStorage, Alert} from 'react-native';
+import Axios from 'axios';
 
 /**
  * Profile controller.
  * Handles showing own profile, and all others.
  */
 const Profile = (props: any) => {
+  //uri for cloudinary
+  //todo: update
+  const cloudinary_url =
+    'https://api.cloudinary.com/v1_1/dk4gnl6ww/image/upload';
+
+  //uri for updating profile
+  const profile_uri = `${Endpoints.base}/${Endpoints.users}/${Endpoints.profile}`;
+
   //is the profile being edited currently?
   const [editingProfile, setEditingProfile] = useState(false);
   const userinfo = props.navigation.getParam('userinfo');
@@ -21,10 +31,24 @@ const Profile = (props: any) => {
   const ownProfile = userinfo.email !== AsyncStorage.getItem('USER');
 
   //edit profile image
-  const updateProfileImage = () => {};
+  //todo: photo location?
+  const updateProfileImage = async (data: any) => {
+    let res = await Axios.post(cloudinary_url, data);
+
+    if (res) {
+    }
+
+    //successful upload ... update profile info with new uri
+  };
 
   //update profile information
-  const updateProfileInfo = () => {};
+  //todo: profile data
+  const updateProfileInfo = async (data: any) => {
+    let res = await Axios.post(profile_uri, data);
+
+    if (res) {
+    }
+  };
 
   return (
     <View style={{flex: 1}}>

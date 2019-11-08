@@ -7,28 +7,35 @@ import {Control} from '../../styles';
 /**
  * UI for message bar in the conversation view
  */
-const MessageBar = (props: any) => {
-  return (
+const ContentBar = (props: any) => {
+  let bar = props.showContent ? (
     <View style={Control.Bar.Wrapper}>
       <View style={{flex: 1}}>
         <View style={Control.Bar.IconWrapper}>
-          <Icon name="add" size={40} color={Control.Bar.Icon.color} onPress={() => props.setShowContent(!props.showContent)} />
+          <Icon
+            name="remove"
+            size={40}
+            color={Control.Bar.Icon.color}
+            onPress={() => props.setShowContent(!props.showContent)}
+          />
         </View>
       </View>
 
       <View style={{flex: 6}}>
         <TextInput
           multiline={true}
-          placeholder="Enter a message"
+          placeholder="CONTENT MENU IN PROGRESS"
           placeholderTextColor={Control.Bar.ChatInput.color}
           style={Control.Bar.Input}
         />
       </View>
       <View style={{flex: 1}}>
-        <Icon name="send" size={40} color={Control.Bar.Icon.color} />
+        <Icon name="map" size={40} color={Control.Bar.Icon.color} />
       </View>
     </View>
-  );
+  ) : null;
+
+  return bar;
 };
 
-export default MessageBar;
+export default ContentBar;

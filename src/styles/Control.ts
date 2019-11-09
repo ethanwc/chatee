@@ -47,7 +47,7 @@ export const Bar = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
     backgroundColor: Colors.darkblue,
-    borderBottomWidth: 2
+    borderBottomWidth: 2,
   },
 
   Icon: {
@@ -73,5 +73,17 @@ export const Bar = StyleSheet.create({
   Input: {
     flexWrap: 'wrap',
     backgroundColor: Colors.snow,
+  },
+});
+
+/**
+ * Styling for control FAB
+ */
+export const Fab = StyleSheet.create({
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });

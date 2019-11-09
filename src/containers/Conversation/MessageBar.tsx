@@ -8,11 +8,16 @@ import {Control} from '../../styles';
  * UI for message bar in the conversation view
  */
 const MessageBar = (props: any) => {
-  return (
+  let chat = !props.showContent ? (
     <View style={Control.Bar.Wrapper}>
       <View style={{flex: 1}}>
         <View style={Control.Bar.IconWrapper}>
-          <Icon name="add" size={40} color={Control.Bar.Icon.color} onPress={() => props.setShowContent(!props.showContent)} />
+          <Icon
+            name="add"
+            size={40}
+            color={Control.Bar.Icon.color}
+            onPress={() => props.setShowContent(!props.showContent)}
+          />
         </View>
       </View>
 
@@ -28,7 +33,9 @@ const MessageBar = (props: any) => {
         <Icon name="send" size={40} color={Control.Bar.Icon.color} />
       </View>
     </View>
-  );
+  ) : null;
+
+  return chat;
 };
 
 export default MessageBar;

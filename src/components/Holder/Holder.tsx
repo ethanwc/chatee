@@ -1,20 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Chats from '../Chats/Chats';
 import ControlBar from '../../containers/Control/ControlBar';
 import ControlMenu from '../../containers/Control/ControlMenu';
-import {View, Alert} from 'react-native';
+import {View, ActivityIndicator, AsyncStorage, Alert} from 'react-native';
 import Contacts from '../Contacts/Contacts';
+import Endpoints from '../../assets/endpoints.json';
+import Axios from 'axios';
 
 /**
  * Holds various components inside the menu
  */
 const Holder = (props: any) => {
+  //endpoint to get user info
+  const endpoint_getuser = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}`;
+  //endpoint to get all users
+  const endpoint_getusers = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.all}`;
+
   //show menu if true
   const [showMenu, setShowMenu] = useState(false);
   //active child is either chats(false) or contacts(true)
   const [activeChild, setActiveChild] = useState(false);
 
+  //show/hide menu
   const toggleMenu = () => setShowMenu(!showMenu);
+
+  const user = AsyncStorage.getItem('USER');
 
   const chats = (
     <Chats
@@ -26,6 +36,7 @@ const Holder = (props: any) => {
 
   const contacts = (
     <Contacts
+      user={user}
       toggleMenu={toggleMenu}
       showMenu={showMenu}
       navigation={props.navigation}

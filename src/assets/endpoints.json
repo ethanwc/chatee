@@ -6,4 +6,5 @@
   "register": "signup",
   "users": "users",
   "profile": "updateProfile",
+  "all": "all"
 }

@@ -6,7 +6,8 @@ import {Contact} from '../../styles';
  * UI for a contact request
  */
 const ContactView = (props: any) => {
-  const name = 'Steve Jobs';
+  const name = props.name;
+  const email = props.email;
   return (
     <TouchableWithoutFeedback
       style={Contact.ContactPreview.Content}
@@ -24,6 +25,9 @@ const ContactView = (props: any) => {
             }}
           />
           <Text style={Contact.ContactPreview.HeaderText}>{name}</Text>
+          <Text style={Contact.ContactPreview.HeaderText}>asdf</Text>
+
+          <Text style={Contact.ContactPreview.BodyText}>{email}</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>

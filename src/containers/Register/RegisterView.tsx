@@ -51,17 +51,9 @@ const Register = (props: any) => {
             borderColor: '#528F7D',
             borderWidth: 1,
           }}
-          placeholder="First Name"
-        />
-        <TextInput
-          style={{
-            height: 40,
-            margin: 10,
-            marginBottom: 0,
-            borderColor: '#528F7D',
-            borderWidth: 1,
-          }}
-          placeholder="Last Name"
+          placeholder="Name"
+          value={props.name}
+          onChangeText={text => props.setName(text)}
         />
         <TextInput
           style={{

@@ -10,6 +10,7 @@ import Axios from 'axios';
 const Register = (props: any) => {
   const [username, setUsername] = useState('ethan@mail.com');
   const [password, setPassword] = useState('password');
+  const [name, setName] = useState("Ethan Cheatham")
   const [remember, setRemember] = useState(false);
   //Endpoint to register
   const register_endpoint = `${Endpoints.base}/${Endpoints.auth}/${Endpoints.register}`;
@@ -45,6 +46,8 @@ const Register = (props: any) => {
       remember={remember}
       setRemember={setRemember}
       handleRegister={handleRegister}
+      name={name}
+      setName={setName}
     />
   );
 };

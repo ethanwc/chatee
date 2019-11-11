@@ -61,6 +61,8 @@ export const Bar = StyleSheet.create({
 
   Icon: {
     color: Colors.cyan,
+    backgroundColor: Colors.darkblue,
+
   },
 
   IconWrapper: {

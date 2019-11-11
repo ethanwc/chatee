@@ -31,6 +31,7 @@ const Register = (props: any) => {
     //stop spinning
     if (data) {
       if (data.status === 201) {
+        props.navigation.goBack();
         //todo: stop spining, rediect
         console.log(data);
       } else Vibration.vibrate(1000);

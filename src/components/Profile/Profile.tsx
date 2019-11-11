@@ -30,6 +30,11 @@ const Profile = (props: any) => {
   //determine if it is the user's profile or not
   const ownProfile = userinfo.email !== AsyncStorage.getItem('USER');
 
+  let profileInfo = undefined;
+
+
+  //todo: convert profile to fetch data and progress
+
   //edit profile image
   //todo: photo location?
   const updateProfileImage = async (data: any) => {

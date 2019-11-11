@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
-import {Control} from '../../styles';
+import {Control, Contact} from '../../styles';
 import ContactView from './ContactView';
 /**
  * Used to dispaly users while searching for new ones.
@@ -42,9 +42,11 @@ const PotentialContactView = (props: any) => {
   if (props.type === 'pending') handleIcon = pending;
 
   return (
-    <View style={{flex: 1, flexDirection: 'row'}}>
-      <ContactView name={props.name} email={props.email} />
-      {handleIcon}
+    <View style={Contact.ContactPreview.Wrapper}>
+      <View style={Contact.ContactPreview.Content}>
+        <ContactView name={props.name} email={props.email} />
+        {handleIcon}
+      </View>
     </View>
   );
 };

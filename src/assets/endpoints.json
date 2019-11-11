@@ -7,8 +7,12 @@
   "users": "users",
   "profile": "updateProfile",
   "all": "all",
-  "friendRequest" : "friendRequest",
-  "handleFriend" : "handleFriend",
-  "removeFriend" : "removeFriend",
-  "updateProfile" : "updateProfile"
+  "friendRequest": "friendRequest",
+  "handleFriend": "handleFriend",
+  "removeFriend": "removeFriend",
+  "updateProfile": "updateProfile",
+  "chats": "chats",
+  "invite": "invite",
+  "remove": "remove",
+  "handleInvite": "handleInvite"
 }

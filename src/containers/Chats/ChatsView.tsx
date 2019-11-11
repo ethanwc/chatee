@@ -14,18 +14,7 @@ const ChatsView = (props: any) => {
 
     <View style={Chats.Chats.Wrapper}>
       <FlatList
-        data={[
-          {key: 'Devin'},
-          {key: 'Dan'},
-          {key: 'Dominic'},
-          {key: 'Jackson'},
-          {key: 'James'},
-          {key: 'Joel'},
-          {key: 'John'},
-          {key: 'Jillian'},
-          {key: 'Jimmy'},
-          {key: 'Julie'},
-        ]}
+        data={[{key: 'Devin'}, {key: 'Dan'}]}
         renderItem={({item}) => (
           <ChatView test={item.key} navigation={props.navigation} />
         )}

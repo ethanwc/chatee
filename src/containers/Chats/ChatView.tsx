@@ -10,6 +10,7 @@ const ChatView = (props: any) => {
   const name = 'Steve Jobs';
   const message = 'What do you mean?';
   const time = new Date().toTimeString();
+  //todo: pass data into conversation... 
   return (
     <View style={Conversation.Conversation.Wrapper}>
       <TouchableNativeFeedback onPress={() => props.navigation.navigate('Conversation')}>

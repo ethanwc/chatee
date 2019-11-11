@@ -15,14 +15,12 @@ import {
 const Login = (props: any) => {
   let spinvalue = new Animated.Value(0);
 
-  let loginanimation = Animated.loop(
-    Animated.timing(spinvalue, {
-      toValue: 1,
-      duration: 3000,
-      easing: Easing.inOut(Easing.quad),
-      useNativeDriver: true,
-    }),
-  );
+  let loginanimation = Animated.timing(spinvalue, {
+    toValue: 1,
+    duration: 3000,
+    easing: Easing.inOut(Easing.quad),
+    useNativeDriver: true,
+  });
 
   let spin = spinvalue.interpolate({
     inputRange: [0, 1],
@@ -31,6 +29,7 @@ const Login = (props: any) => {
 
   const handleLogin = () => {
     loginanimation.start();
+
     props.handleLogin();
   };
 

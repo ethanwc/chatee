@@ -1,18 +1,17 @@
 import React from 'react';
-import {View, Image, Text, TouchableWithoutFeedback} from 'react-native';
+import {View, Image, Text, TouchableWithoutFeedback, Alert} from 'react-native';
 import {Contact} from '../../styles';
 
 /**
  * UI for a contact
  */
 const ContactView = (props: any) => {
-  const name = 'Steve Jobs';
   return (
     <TouchableWithoutFeedback
       style={Contact.ContactPreview.Content}
       onPress={() =>
         props.navigation.navigate('Profile', {
-          userinfo: 'asdf',
+          userinfo: props.email,
         })
       }>
       <View style={Contact.ContactPreview.Wrapper}>
@@ -23,7 +22,10 @@ const ContactView = (props: any) => {
               uri: 'https://facebook.github.io/react-native/img/tiny_logo.png',
             }}
           />
-          <Text style={Contact.ContactPreview.HeaderText}>{name}</Text>
+          <View style={{flexDirection: 'column'}}>
+            <Text style={Contact.ContactPreview.BodyText}>{props.name}</Text>
+            <Text style={Contact.ContactPreview.BodyText}>{props.email}</Text>
+          </View>
         </View>
       </View>
     </TouchableWithoutFeedback>

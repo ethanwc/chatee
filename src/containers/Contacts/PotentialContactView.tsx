@@ -1,8 +1,8 @@
 import React from 'react';
-import NewContactView from './NewContactView';
 import {View, Text, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Control} from '../../styles';
+import ContactView from './ContactView';
 /**
  * Used to dispaly users while searching for new ones.
  */
@@ -20,8 +20,8 @@ const PotentialContactView = (props: any) => {
 
   let pending = (
     <Icon
-      onPress={() => props.friendRemove()}
-      name="send"
+      onPress={() => Alert.alert('Request already sent')}
+      name="done"
       size={40}
       color={Control.Bar.Icon.color}
     />
@@ -29,7 +29,7 @@ const PotentialContactView = (props: any) => {
 
   let remove = (
     <Icon
-      onPress={() => Alert.alert('removed')}
+      onPress={() => Alert.alert('remove')}
       name="remove"
       size={40}
       color={Control.Bar.Icon.color}
@@ -43,7 +43,7 @@ const PotentialContactView = (props: any) => {
 
   return (
     <View style={{flex: 1, flexDirection: 'row'}}>
-      <NewContactView user={props.user} name={props.name} email={props.email} />
+      <ContactView name={props.name} email={props.email} />
       {handleIcon}
     </View>
   );

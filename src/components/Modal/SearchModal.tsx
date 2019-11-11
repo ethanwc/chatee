@@ -43,9 +43,6 @@ const SearchModal = (props: any) => {
             data={filteredUsers}
             renderItem={({item}) => (
               <PotentialContentView
-                user={props.user}
-                getUsers={props.getUsers}
-                getUser={props.getUser}
                 name={item.name}
                 email={item.key}
                 type={item.type}

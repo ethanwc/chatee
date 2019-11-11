@@ -31,6 +31,9 @@ const Contacts = (props: any) => {
     />
   );
 
+  /**
+   * Filter what potential contacts to show
+   */
   const filter = (user: any, data: any) => {
     let tempUsers: any[] = [];
 
@@ -84,7 +87,6 @@ const Contacts = (props: any) => {
 
     if (data) {
       //reload user
-
       props.setUser(data);
       filter(data, [...props.users]);
     }
@@ -94,14 +96,41 @@ const Contacts = (props: any) => {
    * Handle a friend request
    */
 
-  const friendResponse = async () => {};
+  const friendResponse = async (info: any) => {
+    let res = await Axios.post(endpoint_handlefriend, info, {
+      headers: {
+        'x-access-token': await AsyncStorage.getItem('JWT'),
+      },
+    });
+
+    let data = res.data;
+
+    if (data) {
+      //reload user
+      props.setUser(data);
+      filter(data, [...props.users]);
+    }
+  };
 
   /**
    * Remove a friend
    */
 
-  const friendRemove = async () => {
-    props.updateUser();
+  const friendRemove = async (info: any) => {
+    let res = await Axios.post(endpoint_removefriend, info, {
+      headers: {
+        'x-access-token': await AsyncStorage.getItem('JWT'),
+      },
+    });
+
+    let data = res.data;
+
+    if (data) {
+      //reload user
+      Alert.alert(data.message);
+      props.setUser(data);
+      filter(data, [...props.users]);
+    }
   };
 
   useEffect(() => {
@@ -113,28 +142,29 @@ const Contacts = (props: any) => {
 
   let modal = (
     <SearchModal
-      getUsers={getUsers}
-      getUser={props.getUser}
-      user={props.user}
       users={props.users}
       showModal={showModal}
       setShowModal={setShowModal}
       friendRequest={friendRequest}
-      friendRemove={friendRemove}
     />
   );
 
   return (
     <View style={{flex: 1}}>
       {modal}
-
       <ControlBar
         navigation={props.navigation}
         toggleMenu={props.toggleMenu}
         showMenu={props.showMenu}
         isMain={false}
       />
-      <ContactsView navigation={props.navigation} />
+      <ContactsView
+        navigation={props.navigation}
+        user={props.user}
+        users={props.users}
+        friendResponse={friendResponse}
+        friendRemove={friendRemove}
+      />
       {fab}
     </View>
   );

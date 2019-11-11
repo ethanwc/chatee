@@ -19,7 +19,7 @@ const Login = (props: any) => {
     Animated.timing(spinvalue, {
       toValue: 1,
       duration: 3000,
-      easing: Easing.inOut(Easing.cubic),
+      easing: Easing.inOut(Easing.quad),
       useNativeDriver: true,
     }),
   );

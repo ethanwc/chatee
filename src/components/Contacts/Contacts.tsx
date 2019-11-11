@@ -127,7 +127,6 @@ const Contacts = (props: any) => {
 
     if (data) {
       //reload user
-      Alert.alert(data.message);
       props.setUser(data);
       filter(data, [...props.users]);
     }

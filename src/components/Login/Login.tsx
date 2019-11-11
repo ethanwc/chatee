@@ -19,8 +19,8 @@ const Login = (props: any) => {
   /**
    * Gets the info for logged user
    */
-  const getUserInfo = async () => {
-    let res = await Axios.get(info_endpoint, {
+  const getUserInfo = async (info: any) => {
+    let res = await Axios.get(`${info_endpoint}/${info.email}`, {
       headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
     });
     const data = res.data;
@@ -28,7 +28,7 @@ const Login = (props: any) => {
     if (data) {
       await AsyncStorage.setItem('USER', data.email);
       props.navigation.navigate('Holder', {
-        userinfo: data,
+        userid: data.email,
       });
     }
   };
@@ -48,7 +48,7 @@ const Login = (props: any) => {
     if (data) {
       if (data.status === 200) {
         await AsyncStorage.setItem('JWT', data.token);
-        getUserInfo();
+        getUserInfo(userInfo);
       } else {
         Alert.alert('Login Failed', data.message);
         Vibration.vibrate(1000);

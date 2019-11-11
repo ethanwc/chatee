@@ -11,7 +11,8 @@ const ContactView = (props: any) => {
       style={Contact.ContactPreview.Content}
       onPress={() =>
         props.navigation.navigate('Profile', {
-          userinfo: props.email,
+          profileid: props.email,
+          reload: true
         })
       }>
       <View style={Contact.ContactPreview.Wrapper}>

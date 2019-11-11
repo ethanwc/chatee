@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Chats from '../Chats/Chats';
 import ControlBar from '../../containers/Control/ControlBar';
 import ControlMenu from '../../containers/Control/ControlMenu';
-import {View, ActivityIndicator, AsyncStorage, Alert} from 'react-native';
+import {View, ActivityIndicator, AsyncStorage, Alert, Text} from 'react-native';
 import Contacts from '../Contacts/Contacts';
 import Endpoints from '../../assets/endpoints.json';
 import Axios from 'axios';
@@ -18,17 +18,20 @@ const Holder = (props: any) => {
   //active child is either chats(false) or contacts(true)
   const [activeChild, setActiveChild] = useState(false);
   //current user info
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(undefined);
   const [users, setUsers] = useState(Array<any>());
 
   //show/hide menu
   const toggleMenu = () => setShowMenu(!showMenu);
 
+  //logged user info
+  const userid = props.navigation.getParam('userid');
+
   /**
    * Get logged user information
    */
   const getUser = async () => {
-    let res = await Axios.get(endpoint_getuser, {
+    let res = await Axios.get(`${endpoint_getuser}/${userid}`, {
       headers: {
         'x-access-token': await AsyncStorage.getItem('JWT'),
       },
@@ -48,6 +51,8 @@ const Holder = (props: any) => {
     };
     temp();
   }, []);
+
+  if (!user) return <Text>Loading</Text>;
 
   const chats = (
     <Chats
@@ -82,6 +87,7 @@ const Holder = (props: any) => {
 
   const controlmenu = (
     <ControlMenu
+      userid={userid}
       navigation={props.navigation}
       toggleMenu={toggleMenu}
       setActiveChild={setActiveChild}

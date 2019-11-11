@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Endpoints from '../../assets/endpoints.json';
 import ProfileView from '../../containers/Profile/ProfileView';
 import EditBar from '../../containers/Control/EditBar';
-import {View, AsyncStorage, Alert} from 'react-native';
+import {View, AsyncStorage, Alert, ActivityIndicator} from 'react-native';
 import Axios from 'axios';
 
 /**
@@ -10,28 +10,52 @@ import Axios from 'axios';
  * Handles showing own profile, and all others.
  */
 const Profile = (props: any) => {
+  //uri for getting profile info
+  const endpoint_getuser = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}`;
+  //uri for updating profile
+  const profile_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.profile}`;
   //uri for cloudinary
-  //todo: update
   const cloudinary_url =
     'https://api.cloudinary.com/v1_1/dk4gnl6ww/image/upload';
 
-  //uri for updating profile
-  const profile_uri = `${Endpoints.base}/${Endpoints.users}/${Endpoints.profile}`;
-
   //is the profile being edited currently?
   const [editingProfile, setEditingProfile] = useState(false);
-  const userinfo = props.navigation.getParam('userinfo');
 
-  //hooks for updating profile info
-  const [about, setAbout] = useState(userinfo.about);
-  const [name, setName] = useState(userinfo.name);
-  const [location, setLocation] = useState(userinfo.name);
+  //profile info for profile being viewed
+  const [profileInfo, setProfileInfo] = useState();
+
+  //id of user who's profile is being viewed
+  const profileid = props.navigation.getParam('profileid');
+
+  /**
+   * Load info for the profile being viewed
+   */
+  const getProfileInfo = async () => {
+    Alert.alert('getting info for', profileid);
+    let res = await Axios.get(`${endpoint_getuser}/${profileid}`, {
+      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
+    });
+
+    let data = res.data;
+
+    if (data) setProfileInfo(data);
+  };
+
+  useEffect(() => {
+    const temp = async () => {
+      await getProfileInfo();
+    };
+    temp();
+  }, []);
+
+  //loading
+  if (!profileInfo) return <ActivityIndicator size="large" color="#0000ff" />;
+
+  //need new user info
+  // if (profileid !== profileInfo.email) getProfileInfo();
 
   //determine if it is the user's profile or not
-  const ownProfile = userinfo.email !== AsyncStorage.getItem('USER');
-
-  let profileInfo = undefined;
-
+  const ownProfile = profileid !== AsyncStorage.getItem('USER');
 
   //todo: convert profile to fetch data and progress
 
@@ -49,7 +73,7 @@ const Profile = (props: any) => {
   //update profile information
   //todo: profile data
   const updateProfileInfo = async (data: any) => {
-    let res = await Axios.post(profile_uri, data);
+    let res = await Axios.get(profile_uri, data);
 
     if (res) {
     }
@@ -66,15 +90,9 @@ const Profile = (props: any) => {
       />
 
       <ProfileView
-        userinfo={userinfo}
+        profileInfo={profileInfo}
         ownProfile={ownProfile}
         editingProfile={editingProfile}
-        about={about}
-        setAbout={setAbout}
-        name={name}
-        setName={setName}
-        location={location}
-        setLocation={setLocation}
         updateProfileImage={updateProfileImage}
         updateProfileInfo={updateProfileInfo}
       />

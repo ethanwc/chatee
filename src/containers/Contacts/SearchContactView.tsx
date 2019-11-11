@@ -15,7 +15,11 @@ const SearchContactView = (props: any) => {
         })
       }>
       <View style={{flexDirection: 'row'}}>
-        <ContactView name={props.name} email={props.email} />
+        <ContactView
+          navigation={props.navigation}
+          name={props.name}
+          email={props.email}
+        />
         <View style={{flexDirection: 'column'}}>
           <Icon
             onPress={() =>

@@ -33,6 +33,7 @@ const ContactsView = (props: any) => {
           data={incomingFriends}
           renderItem={({item}) => (
             <SearchContactView
+              navigation={props.navigation}
               name={item.name}
               email={item.email}
               friendResponse={props.friendResponse}

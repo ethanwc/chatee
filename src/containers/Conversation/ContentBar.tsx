@@ -9,7 +9,7 @@ import {Control} from '../../styles';
  */
 const ContentBar = (props: any) => {
   let bar = props.showContent ? (
-    <View style={Control.Bar.Wrapper}>
+    <View style={Control.Bar.Wrapper2}>
       <View style={{flex: 1}}>
         <View style={Control.Bar.IconWrapper}>
           <Icon

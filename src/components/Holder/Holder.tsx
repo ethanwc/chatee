@@ -13,18 +13,41 @@ import Axios from 'axios';
 const Holder = (props: any) => {
   //endpoint to get user info
   const endpoint_getuser = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}`;
-  //endpoint to get all users
-  const endpoint_getusers = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.all}`;
-
   //show menu if true
   const [showMenu, setShowMenu] = useState(false);
   //active child is either chats(false) or contacts(true)
   const [activeChild, setActiveChild] = useState(false);
+  //current user info
+  const [user, setUser] = useState();
+  const [users, setUsers] = useState(Array<any>());
 
   //show/hide menu
   const toggleMenu = () => setShowMenu(!showMenu);
 
-  const user = AsyncStorage.getItem('USER');
+  /**
+   * Get logged user information
+   */
+  const getUser = async () => {
+    let res = await Axios.get(endpoint_getuser, {
+      headers: {
+        'x-access-token': await AsyncStorage.getItem('JWT'),
+      },
+    });
+    let data = res.data;
+
+    if (data) {
+      setUser(data);
+    } else {
+      Alert.alert('Failed to load user');
+    }
+  };
+
+  useEffect(() => {
+    let temp = async () => {
+      await getUser();
+    };
+    temp();
+  }, []);
 
   const chats = (
     <Chats
@@ -36,7 +59,11 @@ const Holder = (props: any) => {
 
   const contacts = (
     <Contacts
+      getUser={getUser}
       user={user}
+      users={users}
+      setUser={setUser}
+      setUsers={setUsers}
       toggleMenu={toggleMenu}
       showMenu={showMenu}
       navigation={props.navigation}

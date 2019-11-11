@@ -11,8 +11,6 @@ const SearchModal = (props: any) => {
   //hook for filtering search
   const [search, setSearch] = useState('');
 
-  let users: any[] = props.users;
-
   let filteredUsers: any[] = [];
 
   //lower case search filtering
@@ -46,9 +44,13 @@ const SearchModal = (props: any) => {
             renderItem={({item}) => (
               <PotentialContentView
                 user={props.user}
+                getUsers={props.getUsers}
+                getUser={props.getUser}
                 name={item.name}
                 email={item.key}
                 type={item.type}
+                friendRequest={props.friendRequest}
+                friendRemove={props.friendRemove}
               />
             )}
           />

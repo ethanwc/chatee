@@ -9,17 +9,10 @@ import {Control} from '../../styles';
 const PotentialContactView = (props: any) => {
   let add = (
     <Icon
-      onPress={() => props.navigation.addFriend()}
+      onPress={() => {
+        props.friendRequest({potentialFriend: props.email});
+      }}
       name="add"
-      size={40}
-      color={Control.Bar.Icon.color}
-    />
-  );
-
-  let remove = (
-    <Icon
-      onPress={() => props.navigation.addFriend()}
-      name="remove"
       size={40}
       color={Control.Bar.Icon.color}
     />
@@ -27,8 +20,17 @@ const PotentialContactView = (props: any) => {
 
   let pending = (
     <Icon
-      onPress={() => props.navigation.addFriend()}
+      onPress={() => props.friendRemove()}
       name="send"
+      size={40}
+      color={Control.Bar.Icon.color}
+    />
+  );
+
+  let remove = (
+    <Icon
+      onPress={() => Alert.alert('removed')}
+      name="remove"
       size={40}
       color={Control.Bar.Icon.color}
     />
@@ -41,7 +43,7 @@ const PotentialContactView = (props: any) => {
 
   return (
     <View style={{flex: 1, flexDirection: 'row'}}>
-      <NewContactView name={props.name} email={props.email} />
+      <NewContactView user={props.user} name={props.name} email={props.email} />
       {handleIcon}
     </View>
   );

@@ -25,7 +25,6 @@ const ContactView = (props: any) => {
             }}
           />
           <Text style={Contact.ContactPreview.HeaderText}>{name}</Text>
-          <Text style={Contact.ContactPreview.HeaderText}>asdf</Text>
 
           <Text style={Contact.ContactPreview.BodyText}>{email}</Text>
         </View>

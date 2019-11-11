@@ -6,5 +6,9 @@
   "register": "signup",
   "users": "users",
   "profile": "updateProfile",
-  "all": "all"
+  "all": "all",
+  "friendRequest" : "friendRequest",
+  "handleFriend" : "handleFriend",
+  "removeFriend" : "removeFriend",
+  "updateProfile" : "updateProfile"
 }

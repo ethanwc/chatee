@@ -50,6 +50,15 @@ export const Bar = StyleSheet.create({
     borderBottomWidth: 2,
   },
 
+  Wrapper2: {
+    height: 80,
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: Colors.darkblue,
+    borderBottomWidth: 2,
+  },
+
   Icon: {
     color: Colors.cyan,
   },

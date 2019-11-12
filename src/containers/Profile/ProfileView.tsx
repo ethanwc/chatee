@@ -7,11 +7,6 @@ import {TextInput} from 'react-native-gesture-handler';
  * View for displaying profile information.
  */
 const ProfileView = (props: any) => {
-  //hooks for updating profile info
-  const [about, setAbout] = useState('about');
-  const [name, setName] = useState('asdf');
-  const [location, setLocation] = useState('awadawd');
-
   //icon to edit profile image
   const editImage = (
     <Icon
@@ -51,26 +46,20 @@ const ProfileView = (props: any) => {
   const editProfile = (
     <View style={Profile.ProfileView.Wrapper2}>
       {editImage}
+      <Image source={props.temp}/>
 
       <TextInput
         style={Profile.ProfileView.EditBox}
-        value={name}
-        placeholder="Name"
-        onChangeText={text => setName(text)}
-      />
-
-      <TextInput
-        style={Profile.ProfileView.EditBox}
-        value={about}
+        value={props.about}
         placeholder="About"
-        onChangeText={text => setAbout(text)}
+        onChangeText={text => props.setAbout(text)}
       />
 
       <TextInput
         style={Profile.ProfileView.EditBox}
-        value={location}
+        value={props.location}
         placeholder="Location"
-        onChangeText={text => setLocation(text)}
+        onChangeText={text => props.setLocation(text)}
       />
     </View>
   );

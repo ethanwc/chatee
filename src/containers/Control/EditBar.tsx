@@ -33,7 +33,6 @@ const EditBar = (props: any) => {
     ) : null;
 
   //save profile
-  //todo: post req update profile in profile
   const save = props.editing ? (
     <View style={Control.Bar.IconWrapper}>
       <Icon

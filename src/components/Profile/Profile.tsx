@@ -2,7 +2,15 @@ import React, {useState, useEffect} from 'react';
 import Endpoints from '../../assets/endpoints.json';
 import ProfileView from '../../containers/Profile/ProfileView';
 import EditBar from '../../containers/Control/EditBar';
-import {View, AsyncStorage, Alert, ActivityIndicator} from 'react-native';
+import {
+  View,
+  AsyncStorage,
+  Alert,
+  ActivityIndicator,
+  Image,
+  Platform,
+} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import Axios from 'axios';
 
 /**
@@ -11,36 +19,36 @@ import Axios from 'axios';
  */
 const Profile = (props: any) => {
   //uri for getting profile info
-  const endpoint_getuser = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}`;
+  const getuser_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}`;
   //uri for updating profile
-  const profile_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.profile}`;
+  const updateprofile_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.profile}`;
   //uri for cloudinary
   const cloudinary_url =
     'https://api.cloudinary.com/v1_1/dk4gnl6ww/image/upload';
 
-  //is the profile being edited currently?
-  const [editingProfile, setEditingProfile] = useState(false);
+  //id of user who's profile is being viewed
+  const profileid = props.navigation.getParam('profileid');
 
   //profile info for profile being viewed
   const [profileInfo, setProfileInfo] = useState();
 
-  //id of user who's profile is being viewed
-  const profileid = props.navigation.getParam('profileid');
+  //is the profile that of the logged user?
+  const [ownProfile, setOwnProfile] = useState(false);
 
+  //is the profile being edited currently?
+  const [editingProfile, setEditingProfile] = useState(false);
+
+  //hooks for updating profile info
+  const [about, setAbout] = useState('');
+  const [location, setLocation] = useState('');
+  const [picture, setPicture] = useState('');
+  //new picture upload
+  const [newPicture, setNewPicture] = useState();
+
+  const [temp, setTemp] = useState();
   /**
-   * Load info for the profile being viewed
+   * Init load
    */
-  const getProfileInfo = async () => {
-    Alert.alert('getting info for', profileid);
-    let res = await Axios.get(`${endpoint_getuser}/${profileid}`, {
-      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
-    });
-
-    let data = res.data;
-
-    if (data) setProfileInfo(data);
-  };
-
   useEffect(() => {
     const temp = async () => {
       await getProfileInfo();
@@ -48,34 +56,89 @@ const Profile = (props: any) => {
     temp();
   }, []);
 
+  /**
+   * Load info for the profile being viewed
+   */
+  const getProfileInfo = async () => {
+    let res = await Axios.get(`${getuser_uri}/${profileid}`, {
+      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
+    });
+
+    let data = res.data;
+
+    if (data) {
+      setProfileInfo(data);
+      setOwnProfile((await AsyncStorage.getItem('USER')) === data.email);
+    }
+  };
+
   //loading
   if (!profileInfo) return <ActivityIndicator size="large" color="#0000ff" />;
 
-  //need new user info
-  // if (profileid !== profileInfo.email) getProfileInfo();
+  /**
+   * Update user's profile picture
+   */
+  const updateProfileImage = async () => {
+    const options = {
+      title: 'Select Profile Picture',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
 
-  //determine if it is the user's profile or not
-  const ownProfile = profileid !== AsyncStorage.getItem('USER');
+    //select image to upload
+    ImagePicker.showImagePicker(options, async response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const source = {uri: response.uri};
 
-  //todo: convert profile to fetch data and progress
+        var body = new FormData();
 
-  //edit profile image
-  //todo: photo location?
-  const updateProfileImage = async (data: any) => {
-    let res = await Axios.post(cloudinary_url, data);
+        body.append('file', {uri: response.uri});
+        body.append('upload_preset', 'ajp1noec');
 
-    if (res) {
-    }
-
-    //successful upload ... update profile info with new uri
+        Axios.post(
+          'https://api.cloudinary.com/v1_1/dk4gnl6ww/image/upload',
+          body,
+        ).then((res: any) => {
+          Alert.alert('error', res.error.message);
+        });
+        // if (data) {
+        //   Alert.alert('worked');
+        //   // Alert.alert('uri', data.public_id);
+        //   //set picture in profile...
+        //   //just updateProfileInfo after setting picture.
+        // }
+      }
+    });
   };
 
-  //update profile information
-  //todo: profile data
-  const updateProfileInfo = async (data: any) => {
-    let res = await Axios.get(profile_uri, data);
+  /**
+   * Updates user's profile info
+   */
+  const updateProfileInfo = async () => {
+    const info = {
+      profile: {
+        about: about,
+        location: location,
+        picture: 'unset',
+      },
+    };
 
-    if (res) {
+    let res = await Axios.patch(updateprofile_uri, info, {
+      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
+    });
+
+    let data = res.data;
+    if (data) {
+      setProfileInfo(data);
+      setAbout(data.profile.about);
+      setLocation(data.profile.location);
+      setPicture(data.profile.picture);
     }
   };
 
@@ -87,14 +150,17 @@ const Profile = (props: any) => {
         editing={editingProfile}
         setEditing={setEditingProfile}
         handleSave={updateProfileInfo}
+        updateProfileInfo={updateProfileInfo}
       />
 
       <ProfileView
+        temp={temp}
         profileInfo={profileInfo}
         ownProfile={ownProfile}
         editingProfile={editingProfile}
         updateProfileImage={updateProfileImage}
-        updateProfileInfo={updateProfileInfo}
+        setAbout={setAbout}
+        setLocation={setLocation}
       />
     </View>
   );

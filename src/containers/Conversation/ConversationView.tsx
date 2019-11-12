@@ -4,8 +4,6 @@ import {Conversation} from '../../styles';
 
 const ConversationView = (props: any) => {
   const name = 'Steve Jobs';
-  const message = 'What do you mean?';
-  const time = new Date().toTimeString();
   return (
     <View style={Conversation.Conversation.Wrapper}>
       <View style={Conversation.Conversation.Content}>
@@ -17,10 +15,14 @@ const ConversationView = (props: any) => {
         />
         <View style={Conversation.Conversation.MessageWrapper}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={Conversation.Conversation.HeaderText}>{name}</Text>
-            <Text style={Conversation.Conversation.TimeText}>{time}</Text>
+            <Text style={Conversation.Conversation.HeaderText}>
+              {props.message.author}
+            </Text>
+            <Text style={Conversation.Conversation.TimeText}>
+              {props.message.editDate}
+            </Text>
           </View>
-          <Text style={{flexWrap: 'wrap'}}>{message}</Text>
+          <Text style={{flexWrap: 'wrap'}}>{props.message.message}</Text>
         </View>
       </View>
     </View>

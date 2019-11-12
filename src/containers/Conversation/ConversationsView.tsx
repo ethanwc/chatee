@@ -6,12 +6,14 @@ import {Conversation} from '../../styles';
 /**
  * UI wrapper for each message in selected conversation
  */
-const ConversationsView = () => {
+const ConversationsView = (props: any) => {
   return (
     <View style={Conversation.Conversation.Wrapper}>
       <FlatList
-        data={[{key: 'Devin'}, {key: 'Dan'}]}
-        renderItem={({item}) => <ConversationView test={item.key} />}
+        data={props.messages}
+        renderItem={({item}: any) => (
+          <ConversationView message={item} key={item._id} />
+        )}
       />
     </View>
   );

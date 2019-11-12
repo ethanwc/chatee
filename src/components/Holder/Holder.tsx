@@ -13,6 +13,8 @@ import Axios from 'axios';
 const Holder = (props: any) => {
   //endpoint to get user info
   const endpoint_getuser = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}`;
+  //uri to get chat info
+  const chatinfo_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}/${Endpoints.all}`;
   //show menu if true
   const [showMenu, setShowMenu] = useState(false);
   //active child is either chats(false) or contacts(true)
@@ -20,6 +22,8 @@ const Holder = (props: any) => {
   //current user info
   const [user, setUser] = useState(undefined);
   const [users, setUsers] = useState(Array<any>());
+  //hooks for chats
+  const [userChats, setUserChats] = useState();
 
   //show/hide menu
   const toggleMenu = () => setShowMenu(!showMenu);
@@ -45,17 +49,32 @@ const Holder = (props: any) => {
     }
   };
 
+  /**
+   * Get info about a chat
+   */
+  const getChats = async () => {
+    let res = await Axios.get(chatinfo_uri, {
+      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
+    });
+
+    let data = res.data;
+
+    if (data) setUserChats(data);
+  };
+
   useEffect(() => {
-    let temp = async () => {
-      await getUser();
-    };
-    temp();
+    getUser();
+    getChats();
   }, []);
 
   if (!user) return <Text>Loading</Text>;
 
   const chats = (
     <Chats
+      chats={userChats}
+      setChats={setUserChats}
+      user={user}
+      setUser={setUser}
       toggleMenu={toggleMenu}
       showMenu={showMenu}
       navigation={props.navigation}
@@ -64,8 +83,8 @@ const Holder = (props: any) => {
 
   const contacts = (
     <Contacts
-      getUser={getUser}
       user={user}
+      getUser={getUser}
       users={users}
       setUser={setUser}
       setUsers={setUsers}

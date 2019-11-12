@@ -14,5 +14,6 @@
   "chats": "chats",
   "invite": "invite",
   "remove": "remove",
-  "handleInvite": "handleInvite"
+  "handleInvite": "handleInvite",
+  "messages": "messages"
 }

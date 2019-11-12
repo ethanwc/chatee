@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import ChatsView from '../../containers/Chats/ChatsView';
 import ControlBar from '../../containers/Control/ControlBar';
-import {View, Alert, AsyncStorage} from 'react-native';
+import {View, Alert, AsyncStorage, Text} from 'react-native';
 import {FAB} from 'react-native-paper';
 import {Control} from '../../styles';
 import Endpoints from '../../assets/endpoints.json';
@@ -11,25 +11,26 @@ import Axios from 'axios';
  * Controller for chats
  */
 const Chats = (props: any) => {
-  //endpoint to create a chat
-  const endpoint_addfriend = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}`;
-  //hooks for chats
-  const [chats, setChats] = useState(Array<any>());
+  //uri to create a chat
+  const createchat_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}`;
 
-  useEffect(() => {
-    let initialLoad = async () => {
-      
-    };
+  /**
+   * Create a new chat
+   */
+  const createNewChat = async () => {
+    let res = await Axios.post(createchat_uri, {
+      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
+    });
 
-    initialLoad();
-  }, []);
+    let data = res.data;
+
+    if (res) props.setUser(data);
+  };
+
+  if (!props.chats) return <Text> Loadingasdf</Text>;
 
   const fab = (
-    <FAB
-      style={Control.Fab.fab}
-      icon="plus"
-      onPress={() => console.log(Alert.alert('pressed'))}
-    />
+    <FAB style={Control.Fab.fab} icon="plus" onPress={() => createNewChat()} />
   );
 
   return (
@@ -40,7 +41,7 @@ const Chats = (props: any) => {
         showMenu={props.showMenu}
         isMain={false}
       />
-      <ChatsView navigation={props.navigation} />
+      <ChatsView navigation={props.navigation} chats={props.chats} />
       {fab}
     </View>
   );

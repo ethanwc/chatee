@@ -7,13 +7,15 @@ import {Conversation} from '../../styles';
  * @param props
  */
 const ChatView = (props: any) => {
-  const name = 'Steve Jobs';
-  const message = 'What do you mean?';
-  const time = new Date().toTimeString();
-  //todo: pass data into conversation... 
+  const chat = props.chat;
+  const date = chat.lastMessageDate || chat.createdDate;
+
   return (
     <View style={Conversation.Conversation.Wrapper}>
-      <TouchableNativeFeedback onPress={() => props.navigation.navigate('Conversation')}>
+      <TouchableNativeFeedback
+        onPress={() =>
+          props.navigation.navigate('Conversation', {chatid: props.chat._id})
+        }>
         <View style={Conversation.Conversation.Content}>
           <Image
             style={Conversation.Conversation.ContactImage}
@@ -21,10 +23,12 @@ const ChatView = (props: any) => {
           />
           <View style={Conversation.Conversation.MessageWrapper}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={Conversation.Conversation.HeaderText}>{name}</Text>
-              <Text style={Conversation.Conversation.TimeText}>{time}</Text>
+              <Text style={Conversation.Conversation.HeaderText}>
+                {chat.creator}
+              </Text>
+              <Text style={Conversation.Conversation.TimeText}>{date}</Text>
             </View>
-            <Text style={{flexWrap: 'wrap'}}>{message}</Text>
+            <Text style={{flexWrap: 'wrap'}}>{chat.lastMessage}</Text>
           </View>
         </View>
       </TouchableNativeFeedback>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import ChatView from './ChatView';
 import {FlatList} from 'react-native-gesture-handler';
 import {Chats} from '../../styles';
@@ -8,15 +8,14 @@ import {Chats} from '../../styles';
  * UI wrapper for all chats
  */
 const ChatsView = (props: any) => {
-  return (
-    //todo: map all chats...
-    //todo: search feature
+  // for (let chat in props.chats) chats.push({key: chat});
 
+  return (
     <View style={Chats.Chats.Wrapper}>
       <FlatList
-        data={[{key: 'Devin'}, {key: 'Dan'}]}
-        renderItem={({item}) => (
-          <ChatView test={item.key} navigation={props.navigation} />
+        data={props.chats}
+        renderItem={({item}: any) => (
+          <ChatView navigation={props.navigation} chat={item} key={item._id} />
         )}
       />
     </View>

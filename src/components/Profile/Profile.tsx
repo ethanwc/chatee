@@ -85,36 +85,39 @@ const Profile = (props: any) => {
         skipBackup: true,
         path: 'images',
       },
+      base64: true,
     };
 
     //select image to upload
-    ImagePicker.showImagePicker(options, async response => {
+    ImagePicker.showImagePicker(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        const source = {uri: response.uri};
+        const source = {uri: 'data:image/jpeg;base64,' + response.data};
 
-        var body = new FormData();
+        let base64Img = `data:image/jpg;base64,${response.data}`;
 
-        body.append('file', {uri: response.uri});
-        body.append('upload_preset', 'ajp1noec');
+        // const source = {uri: response.uri};
 
-        Axios.post(
-          'https://api.cloudinary.com/v1_1/dk4gnl6ww/image/upload',
-          body,
-        ).then((res: any) => {
-          Alert.alert('error', res.error.message);
-        });
-        // if (data) {
-        //   Alert.alert('worked');
-        //   // Alert.alert('uri', data.public_id);
-        //   //set picture in profile...
-        //   //just updateProfileInfo after setting picture.
-        // }
+        upload(base64Img);
       }
     });
+  };
+
+  const upload = async (source: any) => {
+    var body = new FormData();
+    body.append('file', source);
+    body.append('upload_preset', 'ajp1noec');
+
+    Axios.post(cloudinary_url, body)
+      .then((res: any) => {
+        Alert.alert('worked', res.message);
+      })
+      .catch((error: any) => {
+        Alert.alert('error', error.message);
+      });
   };
 
   /**

@@ -41,7 +41,11 @@ const EditBar = (props: any) => {
         color={Control.Bar.Icon.color}
         onPress={() => {
           props.setEditing(false);
-          props.handleSave();
+          props.handleSave({profile: {
+            about: props.about,
+            location: props.location,
+            picture: props.picture
+          }});
         }}
       />
     </View>

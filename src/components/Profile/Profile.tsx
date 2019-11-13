@@ -1,15 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Endpoints from '../../assets/endpoints.json';
 import ProfileView from '../../containers/Profile/ProfileView';
-import EditBar from '../../containers/Control/EditBar';
-import {
-  View,
-  AsyncStorage,
-  Alert,
-  ActivityIndicator,
-  Image,
-  Platform,
-} from 'react-native';
+import {AsyncStorage, Alert, ActivityIndicator} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Axios from 'axios';
 
@@ -35,17 +27,6 @@ const Profile = (props: any) => {
   //is the profile that of the logged user?
   const [ownProfile, setOwnProfile] = useState(false);
 
-  //is the profile being edited currently?
-  const [editingProfile, setEditingProfile] = useState(false);
-
-  //hooks for updating profile info
-  const [about, setAbout] = useState('');
-  const [location, setLocation] = useState('');
-  const [picture, setPicture] = useState('');
-  //new picture upload
-  const [newPicture, setNewPicture] = useState();
-
-  const [temp, setTemp] = useState();
   /**
    * Init load
    */
@@ -95,12 +76,7 @@ const Profile = (props: any) => {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        const source = {uri: 'data:image/jpeg;base64,' + response.data};
-
         let base64Img = `data:image/jpg;base64,${response.data}`;
-
-        // const source = {uri: response.uri};
-
         upload(base64Img);
       }
     });
@@ -113,7 +89,14 @@ const Profile = (props: any) => {
 
     Axios.post(cloudinary_url, body)
       .then((res: any) => {
-        Alert.alert('worked', res.message);
+        const info = {
+          profile: {
+            about: profileInfo.profile.about,
+            location: profileInfo.profile.location,
+            picture: res.url,
+          },
+        };
+        updateProfileInfo(info);
       })
       .catch((error: any) => {
         Alert.alert('error', error.message);
@@ -123,49 +106,23 @@ const Profile = (props: any) => {
   /**
    * Updates user's profile info
    */
-  const updateProfileInfo = async () => {
-    const info = {
-      profile: {
-        about: about,
-        location: location,
-        picture: 'unset',
-      },
-    };
-
+  const updateProfileInfo = async (info: any) => {
     let res = await Axios.patch(updateprofile_uri, info, {
       headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
     });
 
     let data = res.data;
-    if (data) {
-      setProfileInfo(data);
-      setAbout(data.profile.about);
-      setLocation(data.profile.location);
-      setPicture(data.profile.picture);
-    }
+    if (data) setProfileInfo(data);
   };
 
   return (
-    <View style={{flex: 1}}>
-      <EditBar
-        navigation={props.navigation}
-        edit={ownProfile}
-        editing={editingProfile}
-        setEditing={setEditingProfile}
-        handleSave={updateProfileInfo}
-        updateProfileInfo={updateProfileInfo}
-      />
-
-      <ProfileView
-        temp={temp}
-        profileInfo={profileInfo}
-        ownProfile={ownProfile}
-        editingProfile={editingProfile}
-        updateProfileImage={updateProfileImage}
-        setAbout={setAbout}
-        setLocation={setLocation}
-      />
-    </View>
+    <ProfileView
+      navigation={props.navigation}
+      profileInfo={profileInfo}
+      updateProfileInfo={updateProfileInfo}
+      ownProfile={ownProfile}
+      updateProfileImage={updateProfileImage}
+    />
   );
 };
 

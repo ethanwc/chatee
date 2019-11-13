@@ -27,6 +27,12 @@ const Profile = (props: any) => {
   //is the profile that of the logged user?
   const [ownProfile, setOwnProfile] = useState(false);
 
+  //new profile image data
+  const [newImage, setNewImage] = useState();
+
+  //hooks for showing edit image modal
+  const [showModal, setShowModal] = useState(false);
+
   /**
    * Init load
    */
@@ -57,9 +63,9 @@ const Profile = (props: any) => {
   if (!profileInfo) return <ActivityIndicator size="large" color="#0000ff" />;
 
   /**
-   * Update user's profile picture
+   * Select user's profile picture
    */
-  const updateProfileImage = async () => {
+  const selectProfileImage = async () => {
     const options = {
       title: 'Select Profile Picture',
       storageOptions: {
@@ -69,22 +75,24 @@ const Profile = (props: any) => {
       base64: true,
     };
 
-    //select image to upload
     ImagePicker.showImagePicker(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        Alert.alert('error', response.error);
       } else {
-        let base64Img = `data:image/jpg;base64,${response.data}`;
-        upload(base64Img);
+        setNewImage(response);
       }
     });
   };
 
-  const upload = async (source: any) => {
+  /**
+   * Upload profile image to cloudinary
+   */
+  const uploadProfileImage = async () => {
     var body = new FormData();
-    body.append('file', source);
+    let base64Img = `data:image/jpg;base64,${newImage.data}`;
+    body.append('file', base64Img);
     body.append('upload_preset', 'ajp1noec');
 
     Axios.post(cloudinary_url, body)
@@ -93,13 +101,13 @@ const Profile = (props: any) => {
           profile: {
             about: profileInfo.profile.about,
             location: profileInfo.profile.location,
-            picture: res.url,
+            picture: res.data.url,
           },
         };
         updateProfileInfo(info);
       })
       .catch((error: any) => {
-        Alert.alert('error', error.message);
+        Alert.alert('cloudinary error', error.message);
       });
   };
 
@@ -112,16 +120,23 @@ const Profile = (props: any) => {
     });
 
     let data = res.data;
-    if (data) setProfileInfo(data);
+    if (data) {
+      setProfileInfo(data);
+      setShowModal(false);
+    }
   };
 
   return (
     <ProfileView
       navigation={props.navigation}
       profileInfo={profileInfo}
-      updateProfileInfo={updateProfileInfo}
       ownProfile={ownProfile}
-      updateProfileImage={updateProfileImage}
+      newImage={newImage}
+      showModal={showModal}
+      setShowModal={setShowModal}
+      updateProfileInfo={updateProfileInfo}
+      selectProfileImage={selectProfileImage}
+      uploadProfileImage={uploadProfileImage}
     />
   );
 };

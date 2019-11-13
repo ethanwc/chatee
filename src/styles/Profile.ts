@@ -24,6 +24,12 @@ export const ProfileView = StyleSheet.create({
     // borderWidth: 1,
   },
 
+  EditProfile: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: Colors.darkblue,
+  },
+
   Content: {
     flex: 1,
     flexDirection: 'column',
@@ -53,7 +59,7 @@ export const ProfileView = StyleSheet.create({
     backgroundColor: Colors.mint,
     alignSelf: 'stretch',
     textAlign: 'center',
-    margin: 10
+    margin: 10,
   },
 
   Icon: {

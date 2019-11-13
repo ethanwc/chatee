@@ -4,44 +4,41 @@ import {Icon} from 'react-native-elements';
 import {Profile} from '../../styles';
 import {TextInput} from 'react-native-gesture-handler';
 import EditBar from '../../containers/Control/EditBar';
+import ProfilePhoto from './PhotoModal';
 
 /**
  * View for displaying profile information.
  */
 const ProfileView = (props: any) => {
-  //hooks for updating profile info
-
-  // if (!props.profileInfo.profile || !props.profileInfo.profile.about)
-  //   return <Text>Loading</Text>;
-
   //is the profile being edited currently?
   const [editingProfile, setEditingProfile] = useState(false);
 
+  //hooks to edit profile info
   const [about, setAbout] = useState(props.profileInfo.profile.about);
   const [location, setLocation] = useState(props.profileInfo.profile.location);
+
+  //check if user has a profile image set
+  const imglocation =
+    props.profileInfo.profile &&
+    props.profileInfo.profile.picture &&
+    props.profileInfo.profile.picture === 'unset'
+      ? require('../../assets/logo.png')
+      : {uri: props.profileInfo.profile.picture};
 
   //icon to edit profile image
   const editImage = (
     <Icon
-      onPress={() => props.updateProfileImage()}
+      onPress={() => props.setShowModal(true)}
       name="image"
       size={150}
       color={Profile.ProfileView.Icon.color}
     />
   );
 
-  //check if user has a profile image set
-  // const imglocation =
-  //   props.profileInfo.profile &&
-  //   props.profileInfo.profile.picture &&
-  //   props.profileInfo.profile.picture === 'unset'
-  //     ? require('../../assets/logo.png')
-  //     : {uri: props.profileInfo.profile.picture};
-
   //tsx view profile
   const viewProfile = (
     <View style={Profile.ProfileView.Content}>
-      {/* <Image style={Profile.ProfileView.Image} source={imglocation} /> */}
+      <Image style={Profile.ProfileView.Image} source={imglocation} />
       <Text style={Profile.ProfileView.HeaderText}>
         {props.profileInfo.email}
       </Text>
@@ -61,8 +58,6 @@ const ProfileView = (props: any) => {
   const editProfile = (
     <View style={Profile.ProfileView.Wrapper2}>
       {editImage}
-      <Image source={props.temp} />
-
       <TextInput
         style={Profile.ProfileView.EditBox}
         value={about}
@@ -83,6 +78,14 @@ const ProfileView = (props: any) => {
 
   return (
     <View style={{flex: 1}}>
+      <ProfilePhoto
+        newImage={props.newImage}
+        showModal={props.showModal}
+        setShowModal={props.setShowModal}
+        updateProfileInfo={props.updateProfileInfo}
+        selectProfileImage={props.selectProfileImage}
+        uploadProfileImage={props.uploadProfileImage}
+      />
       <EditBar
         navigation={props.navigation}
         edit={props.ownProfile}

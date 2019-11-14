@@ -47,7 +47,6 @@ export const Bar = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
     backgroundColor: Colors.darkblue,
-    borderBottomWidth: 2,
   },
 
   Wrapper2: {
@@ -56,13 +55,11 @@ export const Bar = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
     backgroundColor: Colors.darkblue,
-    borderBottomWidth: 2,
   },
 
   Icon: {
     color: Colors.cyan,
     backgroundColor: Colors.darkblue,
-
   },
 
   IconWrapper: {
@@ -96,5 +93,6 @@ export const Fab = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
+    backgroundColor: Colors.cyan,
   },
 });

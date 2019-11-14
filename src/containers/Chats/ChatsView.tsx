@@ -3,29 +3,67 @@ import {View, Text, Alert} from 'react-native';
 import ChatView from './ChatView';
 import {FlatList} from 'react-native-gesture-handler';
 import {Chats} from '../../styles';
+import ChatRequestView from './ChatRequestView';
 
 /**
  * UI wrapper for all chats
  */
 const ChatsView = (props: any) => {
-  // for (let chat in props.chats) chats.push({key: chat});
+  //only display chats the user is in as actual chats
+  let joinedChats: any[] = [];
+  let unjoinedChats: any[] = [];
 
-  return (
-    <View style={Chats.Chats.Wrapper}>
+  for (let chat of props.chats) {
+    if (chat.members.includes(props.user.email)) joinedChats.push(chat);
+    else unjoinedChats.push(chat);
+  }
+
+  let hasIncoming = props.user.chatRequests.length > 0;
+
+  //ui to accept/decline chat invites
+  let requestView = hasIncoming ? (
+    <View style={{flex: 1}}>
+      <Text style={Chats.ChatPreview.Wrapper}>Chat Requests</Text>
       <FlatList
-        data={props.chats}
+        data={unjoinedChats}
         renderItem={({item}: any) => (
-          <ChatView
+          <ChatRequestView
             user={props.user}
             users={props.users}
             getUsers={props.getUsers}
             navigation={props.navigation}
             chat={item}
+            id={item._id}
             key={item._id}
             getChats={props.getChats}
+            handleChatInvite={props.handleChatInvite}
           />
         )}
       />
+    </View>
+  ) : null;
+
+  return (
+    <View style={Chats.Chats.Wrapper}>
+      {requestView}
+      <View style={{flex: 3}}>
+        <FlatList
+          data={joinedChats}
+          renderItem={({item}: any) => (
+            <ChatView
+              user={props.user}
+              users={props.users}
+              getUsers={props.getUsers}
+              navigation={props.navigation}
+              chat={item}
+              id={item._id}
+              key={item._id}
+              getChats={props.getChats}
+              leaveChat={props.leaveChat}
+            />
+          )}
+        />
+      </View>
     </View>
   );
 };

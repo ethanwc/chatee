@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import ChatsView from '../../containers/Chats/ChatsView';
 import ControlBar from '../../containers/Control/ControlBar';
-import {View, Alert, AsyncStorage, Text} from 'react-native';
-import {FAB} from 'react-native-paper';
+import {View, AsyncStorage} from 'react-native';
+import {FAB, ActivityIndicator} from 'react-native-paper';
 import {Control} from '../../styles';
 import Endpoints from '../../assets/endpoints.json';
 import Axios from 'axios';
@@ -13,6 +13,10 @@ import Axios from 'axios';
 const Chats = (props: any) => {
   //uri to create a chat
   const createchat_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}`;
+  //uri to respond to chat invite
+  const handlechat_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}/${Endpoints.handleInvite}`;
+  //uri to leave a chat
+  const leavechat_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}/${Endpoints.remove}`;
 
   /**
    * Create a new chat
@@ -29,8 +33,30 @@ const Chats = (props: any) => {
     if (res) props.getChats();
   };
 
+  /**
+   * Handle a chat invite
+   */
+  const handleChatInvite = async (info: any) => {
+    let res = await Axios.post(handlechat_uri, info, {
+      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
+    });
+
+    if (res) props.getChats();
+  };
+
+  /**
+   * Leave a chat
+   */
+  const leaveChat = async (info: any) => {
+    let res = await Axios.post(leavechat_uri, info, {
+      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
+    });
+
+    if (res) props.getChats();
+  };
+
   if (!props.chats)
-    return <Text> Loadingasdfchats1234abcdwtfamidoingrightnow</Text>;
+    return <ActivityIndicator size="large" color={Control.Bar.Icon.color} />;
 
   const fab = (
     <FAB style={Control.Fab.fab} icon="plus" onPress={() => createNewChat()} />
@@ -51,6 +77,8 @@ const Chats = (props: any) => {
         navigation={props.navigation}
         chats={props.chats}
         getChats={props.getChats}
+        handleChatInvite={handleChatInvite}
+        leaveChat={leaveChat}
       />
       {fab}
     </View>

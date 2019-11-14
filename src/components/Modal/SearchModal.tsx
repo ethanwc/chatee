@@ -4,7 +4,7 @@ import {View, Text, Button, AsyncStorage, Alert} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {TextInput} from 'react-native-paper';
 import PotentialContentView from '../../containers/Contacts/PotentialContactView';
-import PotentialMemberView from '../../containers/Chats/PotentialMemberView';
+import PotentialMemberView from '../../containers/Chats/PotentialChatMemberView';
 
 /**
  * Modal that has a search bar

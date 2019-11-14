@@ -2,7 +2,14 @@ import React, {useState, useEffect} from 'react';
 import ContactsView from '../../containers/Contacts/ContactsView';
 import ControlBar from '../../containers/Control/ControlBar';
 import {Control} from '../../styles';
-import {View, Alert, AsyncStorage, TimePickerAndroid, Text} from 'react-native';
+import {
+  View,
+  Alert,
+  AsyncStorage,
+  TimePickerAndroid,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 import {FAB} from 'react-native-paper';
 import SearchModal from '../Modal/SearchModal';
 import Endpoints from '../../assets/endpoints.json';
@@ -123,7 +130,8 @@ const Contacts = (props: any) => {
       onPress={() => setShowModal(true)}
     />
   );
-  if (!props.users || !filteredUsers) return <Text>Something woang</Text>;
+  if (!props.users || !filteredUsers)
+    return <ActivityIndicator size="large" color={Control.Bar.Icon.color} />;
 
   let modal = (
     <SearchModal

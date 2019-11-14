@@ -20,7 +20,7 @@ export const ProfileView = StyleSheet.create({
     justifyContent: 'flex-start',
     alignContent: 'center',
     flexDirection: 'column',
-    backgroundColor: Colors.darkblue,
+    backgroundColor: Colors.mint,
     // borderWidth: 1,
   },
 

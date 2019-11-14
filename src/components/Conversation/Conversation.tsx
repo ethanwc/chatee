@@ -105,10 +105,7 @@ const Conversation = (props: any) => {
 
     let data = res.data;
 
-    if (data) {
-      getConversation();
-      getChats();
-    }
+    if (data) updateAll();
   };
 
   /**
@@ -146,6 +143,15 @@ const Conversation = (props: any) => {
       filter(data);
       // setUsers(data);
     }
+  };
+
+  /**
+   * Update all releveant information
+   */
+
+  const updateAll = () => {
+    getConversation();
+    getChats();
   };
 
   //wait til loaded to render

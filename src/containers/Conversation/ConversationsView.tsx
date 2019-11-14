@@ -10,7 +10,8 @@ const ConversationsView = (props: any) => {
   return (
     <View style={Conversation.Conversation.Wrapper}>
       <FlatList
-        data={props.messages}
+        data={props.messages.reverse()}
+        inverted={true}
         renderItem={({item}: any) => (
           <ConversationView message={item} key={item._id} />
         )}

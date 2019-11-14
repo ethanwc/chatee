@@ -4,6 +4,7 @@ import ProfileView from '../../containers/Profile/ProfileView';
 import {AsyncStorage, Alert, ActivityIndicator} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Axios from 'axios';
+import {Control} from '../../styles';
 
 /**
  * Profile controller.
@@ -60,7 +61,8 @@ const Profile = (props: any) => {
   };
 
   //loading
-  if (!profileInfo) return <ActivityIndicator size="large" color="#0000ff" />;
+  if (!profileInfo)
+    return <ActivityIndicator size="large" color={Control.Bar.Icon.color} />;
 
   /**
    * Select user's profile picture

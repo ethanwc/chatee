@@ -73,6 +73,7 @@ const Holder = (props: any) => {
     <Chats
       chats={userChats}
       setChats={setUserChats}
+      getChats={getChats}
       user={user}
       setUser={setUser}
       toggleMenu={toggleMenu}

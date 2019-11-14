@@ -21,6 +21,7 @@ const Conversation = (props: any) => {
   const [showContent, setShowContent] = useState(false);
   //id of current chat
   const chatid = props.navigation.getParam('chatid');
+  const getChats = props.navigation.getParam('getChats');
 
   /**
    * Load messages for the conversation
@@ -38,7 +39,6 @@ const Conversation = (props: any) => {
   /**
    * Send a message to the conversation
    */
-
   const sendMessage = async (info: any) => {
     let res = await Axios.post(`${sendmessage_uri}`, info, {
       headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
@@ -48,11 +48,14 @@ const Conversation = (props: any) => {
 
     if (data) {
       //why is this so complicated...........
-      let tempFullMessages = conversation.fullMessages;
-      tempFullMessages.push(data);
-      let tempConversation = conversation;
-      tempConversation.fullMessages = tempFullMessages;
-      setConversation(tempConversation);
+      // let tempFullMessages = conversation.fullMessages;
+      // tempFullMessages.push(data);
+      // let tempConversation = conversation;
+      // tempConversation.fullMessages = tempFullMessages;
+      // setConversation(tempConversation);
+
+      getConversation();
+      getChats();
     }
   };
 

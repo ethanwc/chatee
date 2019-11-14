@@ -14,7 +14,10 @@ const ChatView = (props: any) => {
     <View style={Conversation.Conversation.Wrapper}>
       <TouchableNativeFeedback
         onPress={() =>
-          props.navigation.navigate('Conversation', {chatid: props.chat._id})
+          props.navigation.navigate('Conversation', {
+            chatid: props.chat._id,
+            getChats: () => props.getChats(),
+          })
         }>
         <View style={Conversation.Conversation.Content}>
           <Image

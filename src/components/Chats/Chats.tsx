@@ -18,16 +18,19 @@ const Chats = (props: any) => {
    * Create a new chat
    */
   const createNewChat = async () => {
-    let res = await Axios.post(createchat_uri, {
-      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
-    });
+    let res = await Axios.post(
+      createchat_uri,
+      {},
+      {
+        headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
+      },
+    );
 
-    let data = res.data;
-
-    if (res) props.setUser(data);
+    if (res) props.getChats();
   };
 
-  if (!props.chats) return <Text> Loadingasdf</Text>;
+  if (!props.chats)
+    return <Text> Loadingasdfchats1234abcdwtfamidoingrightnow</Text>;
 
   const fab = (
     <FAB style={Control.Fab.fab} icon="plus" onPress={() => createNewChat()} />
@@ -41,7 +44,11 @@ const Chats = (props: any) => {
         showMenu={props.showMenu}
         isMain={false}
       />
-      <ChatsView navigation={props.navigation} chats={props.chats} />
+      <ChatsView
+        navigation={props.navigation}
+        chats={props.chats}
+        getChats={props.getChats}
+      />
       {fab}
     </View>
   );

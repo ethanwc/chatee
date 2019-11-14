@@ -15,6 +15,9 @@ const ContactsView = (props: any) => {
   let friends = [],
     incomingFriends = [];
 
+  if (!props.user || !props.user.incomingFriendRequests)
+    return <Text> Loading</Text>;
+
   for (let user of props.users) {
     if (props.user.incomingFriendRequests.includes(user.email))
       incomingFriends.push({name: user.name, email: user.email});

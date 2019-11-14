@@ -52,7 +52,7 @@ const SearchModal = (props: any) => {
             )}
           />
           <Button
-            title="Hide modal"
+            title="Done"
             onPress={() => props.setShowModal(false)}
           />
         </View>

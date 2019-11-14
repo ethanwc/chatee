@@ -15,7 +15,12 @@ const ChatsView = (props: any) => {
       <FlatList
         data={props.chats}
         renderItem={({item}: any) => (
-          <ChatView navigation={props.navigation} chat={item} key={item._id} />
+          <ChatView
+            navigation={props.navigation}
+            chat={item}
+            key={item._id}
+            getChats={props.getChats}
+          />
         )}
       />
     </View>

@@ -42,7 +42,10 @@ const Contacts = (props: any) => {
         //determine if friends
         let type = 'notfriends';
         if (user.friends.includes(member.email)) type = 'friends';
-        if (user.outgoingFriendRequests.includes(member.email))
+        if (
+          user.outgoingFriendRequests.includes(member.email) ||
+          user.incomingFriendRequests.includes(member.email)
+        )
           type = 'pending';
 
         tempUsers.push({
@@ -145,6 +148,7 @@ const Contacts = (props: any) => {
       showModal={showModal}
       setShowModal={setShowModal}
       friendRequest={friendRequest}
+      friendRemove={friendRemove}
     />
   );
 

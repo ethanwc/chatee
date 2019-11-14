@@ -13,6 +13,11 @@ const Controlbar = (props: any) => {
     </View>
   ) : null;
 
+  const settings = props.settings ? (
+    <View style={Control.Bar.IconWrapper}>
+      <Icon name="group-add" size={40} color={Control.Bar.Icon.color} />
+    </View>
+  ) : null;
   return (
     <View style={Control.Bar.Wrapper}>
       <View style={Control.Bar.IconWrapper}>
@@ -23,7 +28,11 @@ const Controlbar = (props: any) => {
           color={Control.Bar.Icon.color}
         />
       </View>
-      {search}
+
+      <View style={Control.Bar.IconWrapper}>
+        {settings}
+        {search}
+      </View>
     </View>
   );
 };

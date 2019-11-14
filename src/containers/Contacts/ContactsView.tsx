@@ -40,6 +40,7 @@ const ContactsView = (props: any) => {
               name={item.name}
               email={item.email}
               friendResponse={props.friendResponse}
+              friendRemove={props.friendRemove}
             />
           )}
         />

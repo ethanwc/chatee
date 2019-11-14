@@ -118,7 +118,7 @@ const Holder = (props: any) => {
 
   const shownMenu = (
     <View style={{flex: 1, flexDirection: 'row'}}>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1.5}}>
         {controlbar}
         {controlmenu}
       </View>

@@ -20,7 +20,7 @@ const PotentialContactView = (props: any) => {
 
   let pending = (
     <Icon
-      onPress={() => Alert.alert('Request already sent')}
+      onPress={() => Alert.alert('Request already pending')}
       name="done"
       size={40}
       color={Control.Bar.Icon.color}
@@ -29,7 +29,7 @@ const PotentialContactView = (props: any) => {
 
   let remove = (
     <Icon
-      onPress={() => Alert.alert('remove')}
+      onPress={() => props.friendRemove({friend: props.email})}
       name="remove"
       size={40}
       color={Control.Bar.Icon.color}

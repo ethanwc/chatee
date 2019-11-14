@@ -47,13 +47,6 @@ const Conversation = (props: any) => {
     let data = res.data;
 
     if (data) {
-      //why is this so complicated...........
-      // let tempFullMessages = conversation.fullMessages;
-      // tempFullMessages.push(data);
-      // let tempConversation = conversation;
-      // tempConversation.fullMessages = tempFullMessages;
-      // setConversation(tempConversation);
-
       getConversation();
       getChats();
     }
@@ -67,7 +60,7 @@ const Conversation = (props: any) => {
 
   return (
     <View style={{flex: 1}}>
-      <BackBar navigation={props.navigation} search={true} />
+      <BackBar navigation={props.navigation} search={true} settings={true} />
       <ConversationsView messages={conversation.fullMessages} />
       <ContentBar showContent={showContent} setShowContent={setShowContent} />
       <MessageBar

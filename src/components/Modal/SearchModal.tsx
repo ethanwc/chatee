@@ -51,10 +51,7 @@ const SearchModal = (props: any) => {
               />
             )}
           />
-          <Button
-            title="Done"
-            onPress={() => props.setShowModal(false)}
-          />
+          <Button title="Done" onPress={() => props.setShowModal(false)} />
         </View>
       </View>
     </Modal>

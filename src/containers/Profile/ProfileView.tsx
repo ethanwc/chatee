@@ -4,7 +4,7 @@ import {Icon} from 'react-native-elements';
 import {Profile} from '../../styles';
 import {TextInput} from 'react-native-gesture-handler';
 import EditBar from '../../containers/Control/EditBar';
-import ProfilePhoto from './PhotoModal';
+import ProfilePhoto from '../../components/Modal/PhotoModal';
 
 /**
  * View for displaying profile information.

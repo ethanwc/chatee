@@ -16,6 +16,8 @@ const ChatsView = (props: any) => {
         data={props.chats}
         renderItem={({item}: any) => (
           <ChatView
+            user={props.user}
+            users={props.users}
             navigation={props.navigation}
             chat={item}
             key={item._id}

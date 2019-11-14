@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ContactsView from '../../containers/Contacts/ContactsView';
 import ControlBar from '../../containers/Control/ControlBar';
 import {Control} from '../../styles';
-import {View, Alert, AsyncStorage, TimePickerAndroid} from 'react-native';
+import {View, Alert, AsyncStorage, TimePickerAndroid, Text} from 'react-native';
 import {FAB} from 'react-native-paper';
 import SearchModal from '../Modal/SearchModal';
 import Endpoints from '../../assets/endpoints.json';
@@ -12,25 +12,23 @@ import Axios from 'axios';
  * Controller for contacts
  */
 const Contacts = (props: any) => {
-  //hook for rendering modal
-  const [showModal, setShowModal] = useState(false);
-  //endpoint to get all users
-  const endpoint_getusers = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.all}`;
   //endpoint to send a friend request
   const endpoint_addfriend = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.friendRequest}`;
   //endpoint to handle a friend request
   const endpoint_handlefriend = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.handleFriend}`;
   //endpoint to remove a friend
   const endpoint_removefriend = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.removeFriend}`;
+  //hook for rendering modal
+  const [showModal, setShowModal] = useState(false);
+  //hook for filtered contact members
+  const [filteredUsers, setFilteredUsers] = useState();
 
-  const fab = (
-    <FAB
-      style={Control.Fab.fab}
-      icon="plus"
-      onPress={() => setShowModal(true)}
-    />
-  );
-
+  /**
+   * Call init filter
+   */
+  useEffect(() => {
+    filter(props.user, props.users);
+  }, []);
   /**
    * Filter what potential contacts to show
    */
@@ -56,23 +54,7 @@ const Contacts = (props: any) => {
         });
       }
     }
-    props.setUsers([...tempUsers]);
-  };
-
-  /**
-   * Get all users
-   */
-  const getUsers = async () => {
-    let res = await Axios.get(endpoint_getusers, {
-      headers: {
-        'x-access-token': await AsyncStorage.getItem('JWT'),
-      },
-    });
-
-    let data = res.data;
-    if (data) {
-      filter(props.user, data);
-    }
+    setFilteredUsers([...tempUsers]);
   };
 
   /**
@@ -118,7 +100,6 @@ const Contacts = (props: any) => {
   /**
    * Remove a friend
    */
-
   const friendRemove = async (info: any) => {
     let res = await Axios.post(endpoint_removefriend, info, {
       headers: {
@@ -135,16 +116,18 @@ const Contacts = (props: any) => {
     }
   };
 
-  useEffect(() => {
-    let temp = async () => {
-      await getUsers();
-    };
-    temp();
-  }, []);
+  const fab = (
+    <FAB
+      style={Control.Fab.fab}
+      icon="plus"
+      onPress={() => setShowModal(true)}
+    />
+  );
+  if (!props.users || !filteredUsers) return <Text>Something woang</Text>;
 
   let modal = (
     <SearchModal
-      users={props.users}
+      users={filteredUsers}
       showModal={showModal}
       setShowModal={setShowModal}
       friendRequest={friendRequest}
@@ -164,7 +147,7 @@ const Contacts = (props: any) => {
       <ContactsView
         navigation={props.navigation}
         user={props.user}
-        users={props.users}
+        users={filteredUsers}
         friendResponse={friendResponse}
         friendRemove={friendRemove}
       />

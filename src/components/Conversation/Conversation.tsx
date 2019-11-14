@@ -5,6 +5,7 @@ import MessageBar from '../../containers/Conversation/MessageBar';
 import ContentBar from '../../containers/Conversation/ContentBar';
 import BackBar from '../../containers/Control/BackBar';
 import Endpoints from '../../assets/endpoints.json';
+import SearchModal from '../Modal/SearchModal';
 import Axios from 'axios';
 
 /**
@@ -19,9 +20,24 @@ const Conversation = (props: any) => {
   const [conversation, setConversation] = useState();
   //hook for swapping between text input and content input
   const [showContent, setShowContent] = useState(false);
+  //hook for displaying user invite modal
+  const [showModal, setShowModal] = useState(false);
   //id of current chat
   const chatid = props.navigation.getParam('chatid');
+  //callback function to update chats page
   const getChats = props.navigation.getParam('getChats');
+  //user info, helps with managing chat members
+  const user = props.navigation.getParam('user');
+  //all users basic info
+  const users = props.navigation.getParam('users');
+
+  /**
+   * Get conversation on start
+   */
+
+  useEffect(() => {
+    getConversation();
+  }, []);
 
   /**
    * Load messages for the conversation
@@ -52,15 +68,30 @@ const Conversation = (props: any) => {
     }
   };
 
-  useEffect(() => {
-    getConversation();
-  }, []);
+  const inviteMember = () => {};
 
+  const removeMember = () => {};
+
+  //wait til loaded to render
   if (!conversation) return <Text>Loading</Text>;
+
 
   return (
     <View style={{flex: 1}}>
-      <BackBar navigation={props.navigation} search={true} settings={true} />
+      <SearchModal
+        users={users}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        conversation={conversation}
+        friendRequest={inviteMember}
+        friendRemove={removeMember}
+      />
+      <BackBar
+        navigation={props.navigation}
+        search={true}
+        settings={true}
+        toggleSettings={setShowModal}
+      />
       <ConversationsView messages={conversation.fullMessages} />
       <ContentBar showContent={showContent} setShowContent={setShowContent} />
       <MessageBar

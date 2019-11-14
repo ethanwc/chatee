@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Control} from '../../styles';
 
@@ -15,7 +15,12 @@ const Controlbar = (props: any) => {
 
   const settings = props.settings ? (
     <View style={Control.Bar.IconWrapper}>
-      <Icon name="group-add" size={40} color={Control.Bar.Icon.color} />
+      <Icon
+        name="group-add"
+        size={40}
+        color={Control.Bar.Icon.color}
+        onPress={() => props.toggleSettings(true)}
+      />
     </View>
   ) : null;
   return (

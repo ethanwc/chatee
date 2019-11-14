@@ -18,6 +18,7 @@ const ChatsView = (props: any) => {
           <ChatView
             user={props.user}
             users={props.users}
+            getUsers={props.getUsers}
             navigation={props.navigation}
             chat={item}
             key={item._id}

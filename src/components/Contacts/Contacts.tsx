@@ -38,8 +38,8 @@ const Contacts = (props: any) => {
     for (let member of data) {
       if (user.email !== member.email) {
         //determine if friends
-        let type = 'notfriends';
-        if (user.friends.includes(member.email)) type = 'friends';
+        let type = 'unset';
+        if (user.friends.includes(member.email)) type = 'set';
         if (
           user.outgoingFriendRequests.includes(member.email) ||
           user.incomingFriendRequests.includes(member.email)
@@ -127,6 +127,7 @@ const Contacts = (props: any) => {
 
   let modal = (
     <SearchModal
+      type="contacts"
       users={filteredUsers}
       showModal={showModal}
       setShowModal={setShowModal}

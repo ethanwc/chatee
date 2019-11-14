@@ -4,6 +4,8 @@ import {View, Text, Button, AsyncStorage, Alert} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {TextInput} from 'react-native-paper';
 import PotentialContentView from '../../containers/Contacts/PotentialContactView';
+import PotentialMemberView from '../../containers/Chats/PotentialMemberView';
+
 /**
  * Modal that has a search bar
  */
@@ -20,13 +22,14 @@ const SearchModal = (props: any) => {
         .toString()
         .toLowerCase()
         .includes(search.toLowerCase())
-    )
+    ) {
       filteredUsers.push({
         key: user.key,
         email: user.email,
         type: user.type,
         name: user.name,
       });
+    }
 
   return (
     <Modal isVisible={props.showModal}>
@@ -41,15 +44,26 @@ const SearchModal = (props: any) => {
 
           <FlatList
             data={filteredUsers}
-            renderItem={({item}) => (
-              <PotentialContentView
-                name={item.name}
-                email={item.key}
-                type={item.type}
-                friendRequest={props.friendRequest}
-                friendRemove={props.friendRemove}
-              />
-            )}
+            renderItem={({item}) =>
+              props.type === 'chats' ? (
+                <PotentialMemberView
+                  name={item.name}
+                  email={item.key}
+                  type={item.type}
+                  friendRequest={props.friendRequest}
+                  friendRemove={props.friendRemove}
+                  chatid={props.chatid}
+                />
+              ) : (
+                <PotentialContentView
+                  name={item.name}
+                  email={item.key}
+                  type={item.type}
+                  friendRequest={props.friendRequest}
+                  friendRemove={props.friendRemove}
+                />
+              )
+            }
           />
           <Button title="Done" onPress={() => props.setShowModal(false)} />
         </View>

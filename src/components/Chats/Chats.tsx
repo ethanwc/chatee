@@ -47,6 +47,7 @@ const Chats = (props: any) => {
       <ChatsView
         user={props.user}
         users={props.users}
+        getUsers={props.getUsers}
         navigation={props.navigation}
         chats={props.chats}
         getChats={props.getChats}

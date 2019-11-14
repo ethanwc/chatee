@@ -62,7 +62,9 @@ const Holder = (props: any) => {
     });
 
     let data = res.data;
-    if (data) setUsers(data);
+    if (data) {
+      setUsers(data);
+    }
   };
 
   /**
@@ -93,6 +95,7 @@ const Holder = (props: any) => {
       getChats={getChats}
       user={user}
       users={users}
+      getUsers={getUsers}
       setUser={setUser}
       toggleMenu={toggleMenu}
       showMenu={showMenu}

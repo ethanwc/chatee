@@ -1,16 +1,16 @@
 import React from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Control, Contact} from '../../styles';
-import ContactView from './ContactView';
+import ContactView from '../Contacts/ContactView';
 /**
  * Used to dispaly users while searching for new ones.
  */
-const PotentialContactView = (props: any) => {
+const PotentialMemberView = (props: any) => {
   let add = (
     <Icon
       onPress={() => {
-        props.friendRequest({potentialFriend: props.email});
+        props.friendRequest({newuser: props.email, chatid: props.chatid});
       }}
       name="add"
       size={40}
@@ -51,4 +51,4 @@ const PotentialContactView = (props: any) => {
   );
 };
 
-export default PotentialContactView;
+export default PotentialMemberView;

@@ -17,6 +17,7 @@ const ChatView = (props: any) => {
           props.navigation.navigate('Conversation', {
             chatid: props.chat._id,
             getChats: () => props.getChats(),
+            getUsers: () => props.getUsers(),
             user: props.user,
             users: props.users,
           })

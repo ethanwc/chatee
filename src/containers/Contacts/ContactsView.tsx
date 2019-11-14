@@ -4,26 +4,41 @@ import {FlatList, View, TouchableNativeFeedback, Text} from 'react-native';
 import {Contact} from '../../styles';
 import SearchContactView from './SearchContactView';
 import {Icon} from 'react-native-elements';
+import {ActivityIndicator} from 'react-native-paper';
 /**
  * UI for all contacts
  */
 const ContactsView = (props: any) => {
-  const a = <ContactView />;
-
-  const d = <ContactView navigation={props.navigation} />;
-
   let friends = [],
     incomingFriends = [];
+  let search = props.search.toString().toLowerCase();
 
   if (!props.user || !props.user.incomingFriendRequests)
-    return <Text> Loading</Text>;
+    return (
+      <ActivityIndicator
+        size="large"
+        color={Contact.ContactPreview.Icon.color}
+      />
+    );
 
   for (let user of props.users) {
-    if (props.user.incomingFriendRequests.includes(user.email))
-      incomingFriends.push({name: user.name, email: user.email});
+    //filter by search
+    if (
+      user.name
+        .toString()
+        .toLowerCase()
+        .includes(search) ||
+      user.email
+        .toString()
+        .toLowerCase()
+        .includes(search)
+    ) {
+      if (props.user.incomingFriendRequests.includes(user.email))
+        incomingFriends.push({name: user.name, email: user.email});
 
-    if (props.user.friends.includes(user.email))
-      friends.push({name: user.name, email: user.email});
+      if (props.user.friends.includes(user.email))
+        friends.push({name: user.name, email: user.email});
+    }
   }
 
   const c = true;

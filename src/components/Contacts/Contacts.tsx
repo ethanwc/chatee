@@ -29,6 +29,8 @@ const Contacts = (props: any) => {
   const [showModal, setShowModal] = useState(false);
   //hook for filtered contact members
   const [filteredUsers, setFilteredUsers] = useState();
+  //hook for searching chats
+  const [search, setSearch] = useState('');
 
   /**
    * Call init filter
@@ -151,9 +153,12 @@ const Contacts = (props: any) => {
         navigation={props.navigation}
         toggleMenu={props.toggleMenu}
         showMenu={props.showMenu}
+        search={search}
+        setSearch={setSearch}
         isMain={false}
       />
       <ContactsView
+        search={search}
         navigation={props.navigation}
         user={props.user}
         users={filteredUsers}

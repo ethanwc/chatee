@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ChatsView from '../../containers/Chats/ChatsView';
 import ControlBar from '../../containers/Control/ControlBar';
 import {View, AsyncStorage} from 'react-native';
@@ -17,7 +17,8 @@ const Chats = (props: any) => {
   const handlechat_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}/${Endpoints.handleInvite}`;
   //uri to leave a chat
   const leavechat_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}/${Endpoints.remove}`;
-
+  //hook for searching chats
+  const [search, setSearch] = useState('');
   /**
    * Create a new chat
    */
@@ -68,6 +69,8 @@ const Chats = (props: any) => {
         navigation={props.navigation}
         toggleMenu={props.toggleMenu}
         showMenu={props.showMenu}
+        search={search}
+        setSearch={setSearch}
         isMain={false}
       />
       <ChatsView
@@ -76,6 +79,7 @@ const Chats = (props: any) => {
         getUsers={props.getUsers}
         navigation={props.navigation}
         chats={props.chats}
+        search={search}
         getChats={props.getChats}
         handleChatInvite={handleChatInvite}
         leaveChat={leaveChat}

@@ -12,9 +12,20 @@ const ChatsView = (props: any) => {
   //only display chats the user is in as actual chats
   let joinedChats: any[] = [];
   let unjoinedChats: any[] = [];
+  let search = props.search;
 
   for (let chat of props.chats) {
-    if (chat.members.includes(props.user.email)) joinedChats.push(chat);
+    //some chats may have no messages defined
+    let lastMessage = chat.lastMessage || '';
+    if (
+      (chat.members.includes(props.user.email) &&
+        chat.creator
+          .toString()
+          .toLowerCase()
+          .includes(search.toString().toLowerCase())) ||
+      lastMessage.includes(search)
+    )
+      joinedChats.push(chat);
     else unjoinedChats.push(chat);
   }
 

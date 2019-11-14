@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Control} from '../../styles';
+import {TextInput} from 'react-native-paper';
 
 /**
  * UI for top control bar
  */
 const Controlbar = (props: any) => {
+  //hook to determine if currently searching
+  const [isSearching, setIsSearching] = useState(false);
   const menu = !props.showMenu ? (
     <Icon
       onPress={() => props.toggleMenu()}
@@ -17,25 +20,43 @@ const Controlbar = (props: any) => {
   ) : null;
 
   const search =
-    !props.showMenu && !props.isMain ? (
-      <Icon
-        onPress={() => Alert.alert('search')}
-        name="search"
-        size={40}
-        color={Control.Bar.Icon.color}
-      />
+    !props.showMenu && !props.isMain && !isSearching ? (
+      <View>
+        <Icon
+          onPress={() => setIsSearching(true)}
+          name="search"
+          size={40}
+          color={Control.Bar.Icon.color}
+        />
+      </View>
     ) : null;
 
-  const title =
-    !props.showMenu && !props.isMain ? (
-      <Text style={Control.Bar.HeaderText}>Example Title</Text>
-    ) : null;
+  const cancel = isSearching ? (
+    <Icon
+      onPress={() => {
+        setIsSearching(false);
+        props.setSearch('');
+      }}
+      name="cancel"
+      size={40}
+      color={Control.Bar.Icon.color}
+    />
+  ) : null;
+
+  const searchbar = isSearching ? (
+    <TextInput
+      style={{width: 200}}
+      value={props.search}
+      onChangeText={text => props.setSearch(text)}
+    />
+  ) : null;
+
   return (
     <View style={Control.Bar.Wrapper}>
-      <View style={Control.Bar.IconWrapper}>{menu}</View>
-      {/* <View style={Control.Bar.IconWrapper}>{title}</View> */}
-
-      <View style={Control.Bar.IconWrapper}>{search}</View>
+      {menu}
+      {search}
+      {searchbar}
+      {cancel}
     </View>
   );
 };

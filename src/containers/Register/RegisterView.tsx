@@ -15,14 +15,12 @@ import {
 const Register = (props: any) => {
   let spinvalue = new Animated.Value(0);
 
-  let registeranimation = Animated.loop(
-    Animated.timing(spinvalue, {
-      toValue: 1,
-      duration: 3000,
-      easing: Easing.inOut(Easing.cubic),
-      useNativeDriver: true,
-    }),
-  );
+  let registeranimation = Animated.timing(spinvalue, {
+    toValue: 1,
+    duration: 3000,
+    easing: Easing.inOut(Easing.cubic),
+    useNativeDriver: true,
+  });
 
   let spin = spinvalue.interpolate({
     inputRange: [0, 1],
@@ -63,7 +61,7 @@ const Register = (props: any) => {
             borderColor: '#528F7D',
             borderWidth: 1,
           }}
-          placeholder="Username"
+          placeholder="Email"
           value={props.username}
           onChangeText={text => props.setUsername(text)}
         />
@@ -75,6 +73,7 @@ const Register = (props: any) => {
             borderWidth: 1,
           }}
           placeholder="Password"
+          secureTextEntry={true}
           value={props.password}
           onChangeText={text => props.setPassword(text)}
         />
@@ -85,27 +84,11 @@ const Register = (props: any) => {
             onPress={() => handleRegister()}
           />
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginLeft: 5,
-            marginRight: 10,
-          }}>
-          <View style={{alignItems: 'center', flexDirection: 'row'}}>
-            <CheckBox
-              value={props.remember}
-              onValueChange={() => props.setRemember(!props.remember)}
-            />
-            <Text>Remember Register</Text>
-          </View>
-          <View>
-            <Text onPress={() => props.navigation.navigate('Login')}>
-              Already Registered?
-            </Text>
-          </View>
-        </View>
+        <Text
+          onPress={() => props.navigation.navigate('Login')}
+          style={{textAlign: 'right', marginRight: 10}}>
+          Already Registered?
+        </Text>
       </View>
     </View>
   );

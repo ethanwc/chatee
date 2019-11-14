@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import LoginView from '../../containers/Login/LoginView';
-import {Vibration, AsyncStorage, Alert} from 'react-native';
+import {Vibration, AsyncStorage, Alert, Animated, Easing} from 'react-native';
 import Endpoints from '../../assets/endpoints.json';
 import Axios from 'axios';
 /**
@@ -15,6 +15,27 @@ const Login = (props: any) => {
   const login_endpoint = `${Endpoints.base}/${Endpoints.auth}/${Endpoints.login}`;
   //Endpoint to get user info
   const info_endpoint = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}`;
+
+  /**
+   * On start, check...
+   */
+  useEffect(() => {
+    checkMemory();
+  }, []);
+
+  /**
+   * Check for saved info
+   */
+  let checkMemory = async () => {
+    let remembered = await AsyncStorage.getItem('REMEMBER');
+    if (remembered === 'true') {
+      setUsername((await AsyncStorage.getItem('REMEMBER_USER')) || '');
+      setPassword((await AsyncStorage.getItem('REMEMBER_PASS')) || '');
+      setRemember(true);
+      loginanimation.start();
+      handleLogin();
+    }
+  };
 
   /**
    * Gets the info for logged user
@@ -48,6 +69,11 @@ const Login = (props: any) => {
     if (data) {
       if (data.status === 200) {
         await AsyncStorage.setItem('JWT', data.token);
+        if (remember) {
+          await AsyncStorage.setItem('REMEMBER_USER', userInfo.email);
+          await AsyncStorage.setItem('REMEMBER_PASS', userInfo.password);
+          await AsyncStorage.setItem('REMEMBER', 'true');
+        } else await AsyncStorage.setItem('REMEMBER', 'false');
         getUserInfo(userInfo);
       } else {
         Alert.alert('Login Failed', data.message);
@@ -56,11 +82,20 @@ const Login = (props: any) => {
     }
   };
 
-  //todo: check if user has info saved... if so handle login early
-  //todo: display wrong info msg...
+  //fancy login animation
+  let spinvalue = new Animated.Value(0);
+
+  let loginanimation = Animated.timing(spinvalue, {
+    toValue: 1,
+    duration: 3000,
+    easing: Easing.inOut(Easing.quad),
+    useNativeDriver: true,
+  });
 
   return (
     <LoginView
+      loginanimation={loginanimation}
+      spinvalue={spinvalue}
       navigation={props.navigation}
       username={username}
       setUsername={setUsername}

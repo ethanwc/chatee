@@ -41,8 +41,6 @@ const ContactsView = (props: any) => {
     }
   }
 
-  const c = true;
-
   let friendRequestsView =
     props.user.incomingFriendRequests.length > 0 ? (
       <View style={{flex: 2}}>

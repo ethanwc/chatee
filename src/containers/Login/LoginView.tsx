@@ -13,23 +13,13 @@ import {
  * UI for login page
  */
 const Login = (props: any) => {
-  let spinvalue = new Animated.Value(0);
-
-  let loginanimation = Animated.timing(spinvalue, {
-    toValue: 1,
-    duration: 3000,
-    easing: Easing.inOut(Easing.quad),
-    useNativeDriver: true,
-  });
-
-  let spin = spinvalue.interpolate({
+  let spin = props.spinvalue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '1800deg'],
   });
 
   const handleLogin = () => {
-    loginanimation.start();
-
+    props.loginanimation.start();
     props.handleLogin();
   };
 
@@ -63,6 +53,7 @@ const Login = (props: any) => {
           }}
           placeholder="Password"
           value={props.password}
+          secureTextEntry={true}
           onChangeText={text => props.setPassword(text)}
         />
         <View style={{marginLeft: 10, marginRight: 10}}>

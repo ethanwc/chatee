@@ -8,9 +8,9 @@ import Axios from 'axios';
  * Handles Register, and allows user to save info for auto Register
  */
 const Register = (props: any) => {
-  const [username, setUsername] = useState('ethan@mail.com');
-  const [password, setPassword] = useState('password');
-  const [name, setName] = useState('Ethan Cheatham');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [remember, setRemember] = useState(false);
   //Endpoint to register
   const register_endpoint = `${Endpoints.base}/${Endpoints.auth}/${Endpoints.register}`;
@@ -33,8 +33,10 @@ const Register = (props: any) => {
       if (data.status === 201) {
         props.navigation.goBack();
         //todo: stop spining, rediect
-        console.log(data);
-      } else Vibration.vibrate(1000);
+      } else {
+        Vibration.vibrate(1000);
+        Alert.alert('Sign Up Failed', data.message);
+      }
     }
   };
 

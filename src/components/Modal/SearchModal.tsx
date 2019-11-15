@@ -28,6 +28,7 @@ const SearchModal = (props: any) => {
         email: user.email,
         type: user.type,
         name: user.name,
+        picture: user.picture,
       });
     }
 
@@ -47,6 +48,8 @@ const SearchModal = (props: any) => {
             renderItem={({item}) =>
               props.type === 'chats' ? (
                 <PotentialMemberView
+                  navigation={props.navigation}
+                  picture={item.picture}
                   name={item.name}
                   email={item.key}
                   type={item.type}
@@ -56,6 +59,8 @@ const SearchModal = (props: any) => {
                 />
               ) : (
                 <PotentialContentView
+                  navigation={props.navigation}
+                  picture={item.picture}
                   name={item.name}
                   email={item.key}
                   type={item.type}

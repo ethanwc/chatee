@@ -4,7 +4,7 @@ import ImagePicker from 'react-native-image-picker';
 import ConversationsView from '../../containers/Conversation/ConversationsView';
 import MessageBar from '../../containers/Conversation/MessageBar';
 import ContentBar from '../../containers/Conversation/ContentBar';
-import BackBar from '../../containers/Control/BackBar';
+import ControlBar from '../../containers/Control/ControlBar';
 import Endpoints from '../../assets/endpoints.json';
 import SearchModal from '../Modal/SearchModal';
 import {Control} from '../../styles';
@@ -46,7 +46,8 @@ const Conversation = (props: any) => {
   const user = props.navigation.getParam('user');
   //all users basic info
   const [users, setUsers] = useState(props.navigation.getParam('users'));
-
+  //hook for searching conversation
+  const [search, setSearch] = useState('');
   /**
    * Get conversation on start, filter users...
    */
@@ -76,6 +77,7 @@ const Conversation = (props: any) => {
         name: member.name,
         key: member.email,
         type: type,
+        picture: member.profile.picture,
       };
 
       //member if friend of logged user: or pending/added
@@ -100,7 +102,7 @@ const Conversation = (props: any) => {
 
     let data = res.data;
 
-    if (data) setConversation(data);
+    if (data) setConversation(data.fullMessages.reverse());
   };
 
   /**
@@ -169,9 +171,7 @@ const Conversation = (props: any) => {
         };
         sendMessage(info);
       })
-      .catch((error: any) => {
-        Alert.alert('Error uploading image', error.message);
-      });
+      .catch((error: any) => {});
   };
 
   /**
@@ -216,7 +216,7 @@ const Conversation = (props: any) => {
         sendMessage(info);
       })
       .catch((error: any) => {
-        Alert.alert('error', error.message);
+        Alert.alert('Error', error.message);
       });
   };
 
@@ -273,6 +273,7 @@ const Conversation = (props: any) => {
   return (
     <View style={{flex: 1}}>
       <SearchModal
+        navigation={props.navigation}
         type={'chats'}
         users={filteredMembers}
         showModal={showModal}
@@ -282,13 +283,15 @@ const Conversation = (props: any) => {
         friendRemove={removeMember}
         chatid={chatid}
       />
-      <BackBar
+      <ControlBar
         navigation={props.navigation}
-        search={true}
         settings={true}
         toggleSettings={setShowModal}
+        search={search}
+        setSearch={setSearch}
+        goesBack={true}
       />
-      <ConversationsView messages={conversation.fullMessages} />
+      <ConversationsView messages={conversation} search={search} />
       <ContentBar
         showContent={showContent}
         setShowContent={setShowContent}

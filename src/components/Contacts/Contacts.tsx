@@ -2,14 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ContactsView from '../../containers/Contacts/ContactsView';
 import ControlBar from '../../containers/Control/ControlBar';
 import {Control} from '../../styles';
-import {
-  View,
-  Alert,
-  AsyncStorage,
-  TimePickerAndroid,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
+import {View, AsyncStorage, ActivityIndicator} from 'react-native';
 import {FAB} from 'react-native-paper';
 import SearchModal from '../Modal/SearchModal';
 import Endpoints from '../../assets/endpoints.json';
@@ -60,6 +53,7 @@ const Contacts = (props: any) => {
           name: member.name,
           key: member.email,
           type: type,
+          picture: member.profile.picture,
         });
       }
     }
@@ -137,6 +131,7 @@ const Contacts = (props: any) => {
 
   let modal = (
     <SearchModal
+      navigation={props.navigation}
       type="contacts"
       users={filteredUsers}
       showModal={showModal}

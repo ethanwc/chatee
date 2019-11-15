@@ -44,7 +44,12 @@ const PotentialContactView = (props: any) => {
   return (
     <View style={Contact.ContactPreview.Wrapper}>
       <View style={Contact.ContactPreview.Content}>
-        <ContactView name={props.name} email={props.email} />
+        <ContactView
+          navigation={props.navigation}
+          name={props.name}
+          email={props.email}
+          picture={props.picture}
+        />
         {handleIcon}
       </View>
     </View>

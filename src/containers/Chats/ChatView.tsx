@@ -14,6 +14,11 @@ const ChatView = (props: any) => {
   //only show option to leave if user is not the chat creator
   const canLeave = props.chat.creator !== props.user.email;
 
+  const imglocation =
+    props.user.profile.picture && props.user.profile.picture === 'unset'
+      ? require('../../assets/logo.png')
+      : {uri: props.user.profile.picture};
+
   let leave = canLeave ? (
     <Icon
       onPress={() =>
@@ -40,7 +45,7 @@ const ChatView = (props: any) => {
         <View style={Conversation.Conversation.Content}>
           <Image
             style={Conversation.Conversation.ContactImage}
-            source={require('../../assets/logo.png')}
+            source={imglocation}
           />
           <View style={Conversation.Conversation.MessageWrapper}>
             <View style={{flexDirection: 'row'}}>

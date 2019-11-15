@@ -34,10 +34,18 @@ const ContactsView = (props: any) => {
         .includes(search)
     ) {
       if (props.user.incomingFriendRequests.includes(user.email))
-        incomingFriends.push({name: user.name, email: user.email});
+        incomingFriends.push({
+          name: user.name,
+          email: user.email,
+          picture: user.picture,
+        });
 
       if (props.user.friends.includes(user.email))
-        friends.push({name: user.name, email: user.email});
+        friends.push({
+          name: user.name,
+          email: user.email,
+          picture: user.picture,
+        });
     }
   }
 
@@ -47,9 +55,10 @@ const ContactsView = (props: any) => {
         <Text style={Contact.ContactPreview.HeaderText}>Friend Requests</Text>
         <FlatList
           data={incomingFriends}
-          renderItem={({item}) => (
+          renderItem={({item}: any) => (
             <SearchContactView
               navigation={props.navigation}
+              picture={item.picture}
               name={item.name}
               email={item.email}
               friendResponse={props.friendResponse}
@@ -65,9 +74,10 @@ const ContactsView = (props: any) => {
       <Text style={Contact.ContactPreview.HeaderText}>Friends</Text>
       <FlatList
         data={friends}
-        renderItem={({item}) => (
+        renderItem={({item}: any) => (
           <View style={{flexDirection: 'row'}}>
             <ContactView
+              picture={item.picture}
               name={item.name}
               email={item.email}
               navigation={props.navigation}

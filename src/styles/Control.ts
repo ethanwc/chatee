@@ -84,6 +84,13 @@ export const Bar = StyleSheet.create({
     flexWrap: 'wrap',
     backgroundColor: Colors.snow,
   },
+
+  ControlInput: {
+    flexWrap: 'wrap',
+    backgroundColor: Colors.snow,
+    minWidth: 400,
+    width: 200,
+  },
 });
 
 /**

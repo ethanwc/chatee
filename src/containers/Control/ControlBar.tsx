@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Alert} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {Control} from '../../styles';
-import {TextInput} from 'react-native-paper';
+import {TextInput} from 'react-native-gesture-handler';
 
 /**
  * UI for top control bar
@@ -10,14 +10,27 @@ import {TextInput} from 'react-native-paper';
 const Controlbar = (props: any) => {
   //hook to determine if currently searching
   const [isSearching, setIsSearching] = useState(false);
-  const menu = !props.showMenu ? (
-    <Icon
-      onPress={() => props.toggleMenu()}
-      name="menu"
-      size={40}
-      color={Control.Bar.Icon.color}
-    />
-  ) : null;
+  let menu = null;
+
+  if (!props.showMenu)
+    menu = (
+      <Icon
+        onPress={() => props.toggleMenu()}
+        name="menu"
+        size={40}
+        color={Control.Bar.Icon.color}
+      />
+    );
+
+  if (props.goesBack)
+    menu = (
+      <Icon
+        onPress={() => props.navigation.goBack()}
+        name="arrow-back"
+        size={40}
+        color={Control.Bar.Icon.color}
+      />
+    );
 
   const search =
     !props.showMenu && !props.isMain && !isSearching ? (
@@ -45,18 +58,33 @@ const Controlbar = (props: any) => {
 
   const searchbar = isSearching ? (
     <TextInput
-      style={{width: 200}}
+      multiline={true}
+      placeholder="Search for Something"
+      placeholderTextColor={Control.Bar.ChatInput.color}
+      style={Control.Bar.Input}
       value={props.search}
       onChangeText={text => props.setSearch(text)}
+    />
+  ) : null;
+
+  const settings = props.settings ? (
+    <Icon
+      onPress={() => props.toggleSettings(true)}
+      name="group-add"
+      size={40}
+      color={Control.Bar.Icon.color}
     />
   ) : null;
 
   return (
     <View style={Control.Bar.Wrapper}>
       {menu}
-      {search}
-      {searchbar}
-      {cancel}
+      <View style={{flex: 6}}>{searchbar}</View>
+      <View style={{flexDirection: 'row'}}>
+        {settings}
+        {search}
+        {cancel}
+      </View>
     </View>
   );
 };

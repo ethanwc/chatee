@@ -12,6 +12,7 @@ const ChatRequestView = (props: any) => {
   const chat = props.chat;
   const date = chat.lastMessageDate || chat.createdDate;
 
+
   let accept = (
     <Icon
       onPress={() => props.handleChatInvite({accept: true, chatid: props.id})}

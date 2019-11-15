@@ -1,9 +1,19 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Alert} from 'react-native';
 import {Conversation} from '../../styles';
 
 const ConversationView = (props: any) => {
-  const name = 'Steve Jobs';
+  let image = props.message.type === 'image';
+
+  let content = image ? (
+    <Image
+      source={{uri: props.message.message}}
+      style={{width: 300, height: 300}}
+    />
+  ) : (
+    <Text style={{flexWrap: 'wrap'}}>{props.message.message}</Text>
+  );
+
   return (
     <View style={Conversation.Conversation.Wrapper}>
       <View style={Conversation.Conversation.Content}>
@@ -22,7 +32,7 @@ const ConversationView = (props: any) => {
               {props.message.editDate}
             </Text>
           </View>
-          <Text style={{flexWrap: 'wrap'}}>{props.message.message}</Text>
+          {content}
         </View>
       </View>
     </View>

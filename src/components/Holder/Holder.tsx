@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Chats from '../Chats/Chats';
 import ControlBar from '../../containers/Control/ControlBar';
 import ControlMenu from '../../containers/Control/ControlMenu';
+import {Control} from '../../styles';
 import {View, ActivityIndicator, AsyncStorage, Alert, Text} from 'react-native';
 import Contacts from '../Contacts/Contacts';
 import Endpoints from '../../assets/endpoints.json';
@@ -26,7 +27,6 @@ const Holder = (props: any) => {
   const [users, setUsers] = useState();
   //hooks for chats
   const [userChats, setUserChats] = useState();
-
   //show/hide menu
   const toggleMenu = () => setShowMenu(!showMenu);
 
@@ -86,7 +86,8 @@ const Holder = (props: any) => {
     getChats();
   }, []);
 
-  if (!user) return <Text>Loading</Text>;
+  if (!user)
+    return <ActivityIndicator size="large" color={Control.Bar.Icon.color} />;
 
   const chats = (
     <Chats

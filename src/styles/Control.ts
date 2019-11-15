@@ -50,7 +50,7 @@ export const Bar = StyleSheet.create({
   },
 
   Wrapper2: {
-    height: 80,
+    height: 40,
     justifyContent: 'space-between',
     alignContent: 'center',
     flexDirection: 'row',
@@ -63,6 +63,8 @@ export const Bar = StyleSheet.create({
   },
 
   IconWrapper: {
+    backgroundColor: Colors.darkblue,
+    color: Colors.darkblue,
     justifyContent: 'center',
     flexDirection: 'row',
   },

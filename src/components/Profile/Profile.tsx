@@ -16,8 +16,7 @@ const Profile = (props: any) => {
   //uri for updating profile
   const updateprofile_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.profile}`;
   //uri for cloudinary
-  const cloudinary_url =
-    'https://api.cloudinary.com/v1_1/dk4gnl6ww/image/upload';
+  const cloudinary_url = `${Endpoints.cloudinary}`;
 
   //id of user who's profile is being viewed
   const profileid = props.navigation.getParam('profileid');
@@ -78,9 +77,7 @@ const Profile = (props: any) => {
     };
 
     ImagePicker.showImagePicker(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
+      if (response.error) {
         Alert.alert('error', response.error);
       } else {
         setNewImage(response);

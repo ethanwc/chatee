@@ -1,17 +1,25 @@
 import React, {useState, useEffect} from 'react';
-import {View, Alert, AsyncStorage, Text} from 'react-native';
+import {View, Alert, AsyncStorage} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import ConversationsView from '../../containers/Conversation/ConversationsView';
 import MessageBar from '../../containers/Conversation/MessageBar';
 import ContentBar from '../../containers/Conversation/ContentBar';
 import BackBar from '../../containers/Control/BackBar';
 import Endpoints from '../../assets/endpoints.json';
 import SearchModal from '../Modal/SearchModal';
+import {Control} from '../../styles';
 import Axios from 'axios';
+import {ActivityIndicator} from 'react-native-paper';
+import RNLocation from 'react-native-location';
 
 /**
  * Controller for a conversation
  */
 const Conversation = (props: any) => {
+  //uri for cloudinary
+  const cloudinary_url = `${Endpoints.cloudinary}`;
+  //uri for geocoding
+  const locationiq_uri = `${Endpoints.locationiq}${Endpoints.locationiqkey}`;
   //endpoint to get all users
   const endpoint_getusers = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.all}`;
   //uri to load messages
@@ -109,6 +117,110 @@ const Conversation = (props: any) => {
   };
 
   /**
+   * Selects an image for the chat
+   */
+  const selectImage = async (chatid: string) => {
+    const options = {
+      title: 'Select an Image to share',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    // Open Image Library:
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.error) Alert.alert('error', response.error);
+      else uploadImage(response, chatid);
+    });
+  };
+
+  /**
+   * Take an image for the chat
+   */
+  const takePhoto = async (chatid: string) => {
+    const options = {
+      title: 'Share a photo! Avatar',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    // Launch Camera:
+    ImagePicker.launchCamera(options, response => {
+      if (response.error) Alert.alert('error', response.error);
+      else uploadImage(response, chatid);
+    });
+  };
+
+  /**
+   * Upload image to cloudinary
+   */
+  const uploadImage = async (image: any, chatid: string) => {
+    var body = new FormData();
+    let base64Img = `data:image/jpg;base64,${image.data}`;
+    body.append('file', base64Img);
+    body.append('upload_preset', 'ajp1noec');
+
+    Axios.post(cloudinary_url, body)
+      .then((res: any) => {
+        const info = {
+          message: {type: 'image', message: res.data.url},
+          chatid: chatid,
+        };
+        sendMessage(info);
+      })
+      .catch((error: any) => {
+        Alert.alert('Error uploading image', error.message);
+      });
+  };
+
+  /**
+   * Get your location for the chat
+   */
+  const getLocation = async () => {
+    RNLocation.requestPermission({
+      ios: 'whenInUse',
+      android: {
+        detail: 'coarse',
+        rationale: {
+          title: 'We need to access your location',
+          message: 'We use your location to show where you are on the map',
+          buttonPositive: 'OK',
+          buttonNegative: 'Cancel',
+        },
+      },
+    });
+
+    RNLocation.getLatestLocation({timeout: 6000}).then(latestLocation => {
+      if (latestLocation) getAddress(latestLocation);
+    });
+  };
+
+  /**
+   * Converts location to address
+   */
+  const getAddress = async (location: any) => {
+    Axios.get(
+      `${locationiq_uri}&lat=${location.latitude}&lon=${location.longitude}&format=json`,
+    )
+      .then((res: any) => {
+        let address = res.data.display_name;
+
+        const info = {
+          message: {
+            type: 'text',
+            message: `${user.name} is currently at ${address}`,
+          },
+          chatid: chatid,
+        };
+        sendMessage(info);
+      })
+      .catch((error: any) => {
+        Alert.alert('error', error.message);
+      });
+  };
+
+  /**
    * Invites a member to a chat
    */
   const inviteMember = async (info: any) => {
@@ -155,7 +267,8 @@ const Conversation = (props: any) => {
   };
 
   //wait til loaded to render
-  if (!conversation) return <Text>Loading</Text>;
+  if (!conversation)
+    return <ActivityIndicator size="large" color={Control.Bar.Icon.color} />;
 
   return (
     <View style={{flex: 1}}>
@@ -176,7 +289,14 @@ const Conversation = (props: any) => {
         toggleSettings={setShowModal}
       />
       <ConversationsView messages={conversation.fullMessages} />
-      <ContentBar showContent={showContent} setShowContent={setShowContent} />
+      <ContentBar
+        showContent={showContent}
+        setShowContent={setShowContent}
+        selectImage={selectImage}
+        takePhoto={takePhoto}
+        getLocation={getLocation}
+        chatid={chatid}
+      />
       <MessageBar
         showContent={showContent}
         setShowContent={setShowContent}

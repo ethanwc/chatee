@@ -1,6 +1,5 @@
 import React from 'react';
 import {View} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
 import {Icon} from 'react-native-elements';
 import {Control} from '../../styles';
 
@@ -21,16 +20,34 @@ const ContentBar = (props: any) => {
         </View>
       </View>
 
-      <View style={{flex: 6}}>
-        <TextInput
-          multiline={true}
-          placeholder="CONTENT MENU IN PROGRESS"
-          placeholderTextColor={Control.Bar.ChatInput.color}
-          style={Control.Bar.Input}
-        />
+      <View style={{flex: 1}}>
+        <View style={Control.Bar.IconWrapper}>
+          <Icon
+            name="camera"
+            size={40}
+            color={Control.Bar.Icon.color}
+            onPress={() => props.takePhoto(props.chatid)}
+          />
+        </View>
       </View>
       <View style={{flex: 1}}>
-        <Icon name="map" size={40} color={Control.Bar.Icon.color} />
+        <View style={Control.Bar.IconWrapper}>
+          <Icon
+            name="photo"
+            size={40}
+            color={Control.Bar.Icon.color}
+            onPress={() => props.selectImage(props.chatid)}
+          />
+        </View>
+      </View>
+
+      <View style={{flex: 1}}>
+        <Icon
+          name="my-location"
+          size={40}
+          color={Control.Bar.Icon.color}
+          onPress={() => props.getLocation()}
+        />
       </View>
     </View>
   ) : null;

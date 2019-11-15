@@ -79,7 +79,13 @@ const Login = (props: any) => {
             <Text>Remember Login</Text>
           </View>
           <View>
-            <Text onPress={() => props.navigation.navigate('Register')}>
+            <Text
+              onPress={() =>
+                props.navigation.navigate('Register', {
+                  setUsername: () => props.setUsername(),
+                  setPassword: () => props.setPassword(),
+                })
+              }>
               New User?
             </Text>
           </View>

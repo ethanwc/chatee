@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Pushy from 'pushy-react-native';
-
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Chats from './components/Chats/Chats';

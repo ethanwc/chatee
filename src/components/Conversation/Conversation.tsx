@@ -28,6 +28,8 @@ const Conversation = (props: any) => {
   const sendmessage_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.messages}`;
   //uri to invite member to conversation
   const inviteconversation_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}/${Endpoints.invite}`;
+  //uri to remove member from conversation
+  const removeconversation_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}/${Endpoints.remove}`;
   //hook for chat messages
   const [conversation, setConversation] = useState();
   //hook for swapping between text input and content input
@@ -39,8 +41,6 @@ const Conversation = (props: any) => {
   //id of current chat
   const chatid = props.navigation.getParam('chatid');
   //callback function to update who is in a chat
-  const getUsers = props.navigation.getParam('getUsers');
-  //callback function to update chats page
   const getChats = props.navigation.getParam('getChats');
   //user info, helps with managing chat members
   const user = props.navigation.getParam('user');
@@ -67,11 +67,23 @@ const Conversation = (props: any) => {
      * List members of chat as actual members and potential friend based members.
      */
     for (let member of users) {
+      //if you are the creator you can add/remove other people
       let type = 'unset';
-      if (member.chatRequests.includes(chatid)) type = 'pending';
-      if (member.chats.includes(chatid) || user.email === member.email)
-        type = 'set';
 
+      if (conversation) {
+        Alert.alert('creator is', conversation.creator);
+        if (conversation.creator === user.email) {
+          //creator cant remove themself
+          if (member.email !== user.email) {
+            if (member.chatRequests.includes(chatid)) type = 'pending';
+            if (member.chats.includes(chatid) || user.email === member.email)
+              type = 'set';
+          } else type = 'unauth';
+        } else {
+          if (member.chatRequests.includes(chatid)) type = 'pending';
+          if (member.chats.includes(chatid)) type = 'unauth';
+        }
+      }
       let tempUser = {
         email: member.email,
         name: member.name,
@@ -79,15 +91,7 @@ const Conversation = (props: any) => {
         type: type,
         picture: member.profile.picture,
       };
-
-      //member if friend of logged user: or pending/added
-
-      if (
-        user.friends.includes(tempUser.email) ||
-        tempUser.type === 'set' ||
-        tempUser.type === 'pending'
-      )
-        if (!tempMembers.includes(tempUser)) tempMembers.push(tempUser);
+      tempMembers.push(tempUser);
     }
 
     setFilteredMembers([...tempMembers]);
@@ -102,7 +106,12 @@ const Conversation = (props: any) => {
 
     let data = res.data;
 
-    if (data) setConversation(data.fullMessages.reverse());
+    if (data) {
+      setConversation({
+        messages: data.fullMessages.reverse(),
+        creator: data.creator,
+      });
+    }
   };
 
   /**
@@ -236,8 +245,14 @@ const Conversation = (props: any) => {
   /**
    * Removes a member from a chat
    */
-  const removeMember = async () => {
-    Alert.alert('removed...notrly');
+  const removeMember = async (info: any) => {
+    let res = await Axios.post(removeconversation_uri, info, {
+      headers: {'x-access-token': await AsyncStorage.getItem('JWT')},
+    });
+
+    let data = res.data;
+
+    if (data) updateUsers();
   };
 
   /**
@@ -253,7 +268,6 @@ const Conversation = (props: any) => {
     let data = res.data;
     if (data) {
       filter(data);
-      // setUsers(data);
     }
   };
 
@@ -278,7 +292,7 @@ const Conversation = (props: any) => {
         users={filteredMembers}
         showModal={showModal}
         setShowModal={setShowModal}
-        conversation={conversation}
+        conversation={conversation.messages}
         friendRequest={inviteMember}
         friendRemove={removeMember}
         chatid={chatid}
@@ -291,7 +305,7 @@ const Conversation = (props: any) => {
         setSearch={setSearch}
         goesBack={true}
       />
-      <ConversationsView messages={conversation} search={search} />
+      <ConversationsView messages={conversation.messages} search={search} />
       <ContentBar
         showContent={showContent}
         setShowContent={setShowContent}

@@ -45,9 +45,13 @@ const ProfileView = (props: any) => {
       <Text style={Profile.ProfileView.HeaderText}>
         {props.profileInfo.name}
       </Text>
-      <Text style={Profile.ProfileView.HeaderText}>
-        {props.profileInfo.profile.about}
-      </Text>
+      <View style={{flexDirection: 'row', alignContent: 'center'}}>
+        <Text style={Profile.ProfileView.BodyText}>About</Text>
+        <Text style={Profile.ProfileView.HeaderText}>
+          {props.profileInfo.profile.about}
+        </Text>
+      </View>
+
       <Text style={Profile.ProfileView.HeaderText}>
         {props.profileInfo.profile.location}
       </Text>

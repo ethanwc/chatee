@@ -8,7 +8,7 @@ import Axios from 'axios';
  * Handles login, and allows user to save info for auto login
  */
 const Login = (props: any) => {
-  const [username, setUsername] = useState('ethan@mail.com');
+  const [username, setUsername] = useState('e@mail.com');
   const [password, setPassword] = useState('password');
   const [remember, setRemember] = useState(false);
   //Endpoint to login

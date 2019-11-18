@@ -29,17 +29,22 @@ const PotentialMemberView = (props: any) => {
 
   let remove = (
     <Icon
-      onPress={() => props.friendRemove({friend: props.email})}
+      onPress={() =>
+        props.friendRemove({removeuser: props.email, chatid: props.chatid})
+      }
       name="remove"
       size={40}
       color={Control.Bar.Icon.color}
     />
   );
 
+  let unauth = <Icon name="map" size={40} color={Control.Bar.Icon.color} />;
+
   let handleIcon = add;
 
   if (props.type === 'set') handleIcon = remove;
   if (props.type === 'pending') handleIcon = pending;
+  if (props.type === 'unauth') handleIcon = unauth;
 
   return (
     <View style={Contact.ContactPreview.Wrapper}>

@@ -40,7 +40,6 @@ export const ProfileView = StyleSheet.create({
   HeaderText: {
     fontSize: 40,
     color: Colors.cyan,
-    alignSelf: 'center',
   },
 
   BodyText: {

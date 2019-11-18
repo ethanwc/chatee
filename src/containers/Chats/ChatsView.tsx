@@ -23,13 +23,12 @@ const ChatsView = (props: any) => {
       else unjoinedChats.push(chat);
     }
   }
-
+ 
   let hasIncoming = props.user.chatRequests.length > 0;
 
   //ui to accept/decline chat invites
   let requestView = hasIncoming ? (
     <View style={{flex: 1}}>
-      <Text style={Chats.ChatPreview.Wrapper}>Chat Requests</Text>
       <FlatList
         data={unjoinedChats}
         renderItem={({item}: any) => (

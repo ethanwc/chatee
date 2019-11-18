@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Alert, AsyncStorage} from 'react-native';
+import {View, Alert, AsyncStorage, Text} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import ConversationsView from '../../containers/Conversation/ConversationsView';
 import MessageBar from '../../containers/Conversation/MessageBar';
@@ -45,16 +45,15 @@ const Conversation = (props: any) => {
   //user info, helps with managing chat members
   const user = props.navigation.getParam('user');
   //all users basic info
-  const [users, setUsers] = useState(props.navigation.getParam('users'));
   //hook for searching conversation
   const [search, setSearch] = useState('');
+
   /**
    * Get conversation on start, filter users...
    */
-
   useEffect(() => {
     getConversation();
-    filter(users);
+    updateUsers();
   }, []);
 
   /**
@@ -66,35 +65,42 @@ const Conversation = (props: any) => {
     /**
      * List members of chat as actual members and potential friend based members.
      */
-    for (let member of users) {
-      //if you are the creator you can add/remove other people
-      let type = 'unset';
-
-      if (conversation) {
-        Alert.alert('creator is', conversation.creator);
-        if (conversation.creator === user.email) {
-          //creator cant remove themself
-          if (member.email !== user.email) {
+    if (conversation) {
+      for (let member of users) {
+        //only show releveant people... friends, members, requested members, yourself?
+        if (
+          member.email === user.email ||
+          user.friends.includes(member.email) ||
+          member.chats.includes(chatid) ||
+          member.chatRequests.includes(chatid)
+        ) {
+          let type = 'unset';
+          //if you are the creator you can add/remove other people
+          if (conversation.creator === user.email) {
+            //creator cant remove themself
+            if (member.email !== user.email) {
+              if (member.chatRequests.includes(chatid)) type = 'pending';
+              if (member.chats.includes(chatid) || user.email === member.email)
+                type = 'set';
+            } else type = 'unauth';
+            //not the chat creator
+          } else {
             if (member.chatRequests.includes(chatid)) type = 'pending';
-            if (member.chats.includes(chatid) || user.email === member.email)
-              type = 'set';
-          } else type = 'unauth';
-        } else {
-          if (member.chatRequests.includes(chatid)) type = 'pending';
-          if (member.chats.includes(chatid)) type = 'unauth';
+            if (member.chats.includes(chatid)) type = 'unauth';
+          }
+          let tempUser = {
+            email: member.email,
+            name: member.name,
+            key: member.email,
+            type: type,
+            picture: member.profile.picture,
+          };
+          tempMembers.push(tempUser);
         }
       }
-      let tempUser = {
-        email: member.email,
-        name: member.name,
-        key: member.email,
-        type: type,
-        picture: member.profile.picture,
-      };
-      tempMembers.push(tempUser);
-    }
 
-    setFilteredMembers([...tempMembers]);
+      setFilteredMembers([...tempMembers]);
+    }
   };
   /**
    * Load messages for the conversation
@@ -274,15 +280,19 @@ const Conversation = (props: any) => {
   /**
    * Update all releveant information
    */
-
   const updateAll = () => {
     getConversation();
     getChats();
   };
 
   //wait til loaded to render
-  if (!conversation)
+  if (!conversation || !conversation.creator)
     return <ActivityIndicator size="large" color={Control.Bar.Icon.color} />;
+  //make sure users are filtered based on chat
+  if (!filteredMembers){
+    updateUsers();
+    return <Text>Loading</Text>;
+  } 
 
   return (
     <View style={{flex: 1}}>

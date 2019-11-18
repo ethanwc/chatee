@@ -38,13 +38,13 @@ const PotentialMemberView = (props: any) => {
     />
   );
 
-  let unauth = <Icon name="map" size={40} color={Control.Bar.Icon.color} />;
+  let unauth = <Icon name="" size={40} color={Control.Bar.Icon.color} />;
 
-  let handleIcon = add;
+  let handleIcon = unauth;
 
   if (props.type === 'set') handleIcon = remove;
   if (props.type === 'pending') handleIcon = pending;
-  if (props.type === 'unauth') handleIcon = unauth;
+  if (props.type === 'unset') handleIcon = add;
 
   return (
     <View style={Contact.ContactPreview.Wrapper}>

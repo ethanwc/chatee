@@ -60,6 +60,7 @@ const ContactsView = (props: any) => {
               navigation={props.navigation}
               picture={item.picture}
               name={item.name}
+              key={item.email}
               email={item.email}
               friendResponse={props.friendResponse}
               friendRemove={props.friendRemove}
@@ -71,7 +72,6 @@ const ContactsView = (props: any) => {
 
   let friendsView = (
     <View style={Contact.ContactPreview.Wrapper}>
-      <Text style={Contact.ContactPreview.HeaderText}>Friends</Text>
       <FlatList
         data={friends}
         renderItem={({item}: any) => (
@@ -80,6 +80,7 @@ const ContactsView = (props: any) => {
               picture={item.picture}
               name={item.name}
               email={item.email}
+              key={item.email}
               navigation={props.navigation}
             />
             <Icon
@@ -100,8 +101,10 @@ const ContactsView = (props: any) => {
 
   return (
     <View style={Contact.ContactPreview.Wrapper}>
-      {friendRequestsView}
-      {friendsView}
+      <View style={Contact.ContactPreview.Content}>
+        {friendRequestsView}
+        {friendsView}
+      </View>
     </View>
   );
 };

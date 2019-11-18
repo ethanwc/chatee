@@ -51,6 +51,7 @@ const SearchModal = (props: any) => {
                   navigation={props.navigation}
                   picture={item.picture}
                   name={item.name}
+                  key={item.key}
                   email={item.key}
                   type={item.type}
                   friendRequest={props.friendRequest}

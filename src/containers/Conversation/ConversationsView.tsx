@@ -29,7 +29,9 @@ const ConversationsView = (props: any) => {
         data={filteredMessages}
         inverted={true}
         renderItem={({item}: any) => (
-          <ConversationView message={item} key={item._id} />
+          <ConversationView message={item} 
+          key={item._id}
+           />
         )}
       />
     </View>

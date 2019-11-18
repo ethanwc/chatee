@@ -49,7 +49,7 @@ const PotentialMemberView = (props: any) => {
   return (
     <View style={Contact.ContactPreview.Wrapper}>
       <View style={Contact.ContactPreview.Content}>
-        <ContactView name={props.name} email={props.email} />
+        <ContactView picture={props.picture} name={props.name} email={props.email} />
         {handleIcon}
       </View>
     </View>

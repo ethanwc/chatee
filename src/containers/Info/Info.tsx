@@ -5,7 +5,7 @@ import {Profile} from '../../styles';
 export const Info = () => {
   return (
     <View style={Profile.ProfileView.Wrapper2}>
-      <View style={Profile.ProfileView.Content}>
+      <View style={{margin: 10}}>
         <Text style={Profile.ProfileView.HeaderText}>Info about Messagee</Text>
         <Text style={Profile.ProfileView.BodyText}>
           Designed and Developed by Ethan Cheatham using react native

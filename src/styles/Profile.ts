@@ -34,17 +34,20 @@ export const ProfileView = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    margin: 5,
+    margin: 25,
+    justifyContent: 'center'
   },
 
   HeaderText: {
     fontSize: 40,
     color: Colors.cyan,
+    alignSelf: 'center',
   },
 
   BodyText: {
     fontSize: 25,
     color: Colors.darkblue,
+    alignSelf: 'center',
   },
 
   Description: {
@@ -53,8 +56,8 @@ export const ProfileView = StyleSheet.create({
   },
 
   EditBox: {
-    fontSize: 25,
-    color: Colors.darkblue,
+    fontSize: 35,
+    color: Colors.cyan,
     backgroundColor: Colors.mint,
     alignSelf: 'stretch',
     textAlign: 'center',

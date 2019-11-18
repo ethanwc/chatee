@@ -39,22 +39,28 @@ const ProfileView = (props: any) => {
   const viewProfile = (
     <View style={Profile.ProfileView.Content}>
       <Image style={Profile.ProfileView.Image} source={imglocation} />
-      <Text style={Profile.ProfileView.HeaderText}>
-        {props.profileInfo.email}
-      </Text>
-      <Text style={Profile.ProfileView.HeaderText}>
-        {props.profileInfo.name}
-      </Text>
-      <View style={{flexDirection: 'row', alignContent: 'center'}}>
-        <Text style={Profile.ProfileView.BodyText}>About</Text>
+      <View style={Profile.ProfileView.Content}>
         <Text style={Profile.ProfileView.HeaderText}>
-          {props.profileInfo.profile.about}
+          {props.profileInfo.name}
         </Text>
-      </View>
+        <Text style={Profile.ProfileView.HeaderText}>
+          {props.profileInfo.email}
+        </Text>
 
-      <Text style={Profile.ProfileView.HeaderText}>
-        {props.profileInfo.profile.location}
-      </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={Profile.ProfileView.BodyText}>About: </Text>
+          <Text style={Profile.ProfileView.BodyText}>
+            {props.profileInfo.profile.about}
+          </Text>
+        </View>
+
+        <View style={{flexDirection: 'row'}}>
+          <Text style={Profile.ProfileView.BodyText}>Location: </Text>
+          <Text style={Profile.ProfileView.BodyText}>
+            {props.profileInfo.profile.location}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 
@@ -62,26 +68,29 @@ const ProfileView = (props: any) => {
   const editProfile = (
     <View style={Profile.ProfileView.Wrapper2}>
       {editImage}
-      <TextInput
-        style={Profile.ProfileView.EditBox}
-        value={about}
-        placeholder="About"
-        onChangeText={text => setAbout(text)}
-      />
 
-      <TextInput
-        style={Profile.ProfileView.EditBox}
-        value={location}
-        placeholder="Location"
-        onChangeText={text => setLocation(text)}
-      />
+      <Text style={Profile.ProfileView.BodyText}>About: </Text>
+        <TextInput
+          style={Profile.ProfileView.EditBox}
+          value={about}
+          placeholder="About"
+          onChangeText={text => setAbout(text)}
+        />
+
+      <Text style={Profile.ProfileView.BodyText}>Location: </Text>
+        <TextInput
+          style={Profile.ProfileView.EditBox}
+          value={location}
+          placeholder="Location"
+          onChangeText={text => setLocation(text)}
+        />
     </View>
   );
 
   const whichProfile = !editingProfile ? viewProfile : editProfile;
 
   return (
-    <View style={{flex: 1}}>
+    <View style={Profile.ProfileView.Wrapper1}>
       <ProfilePhoto
         newImage={props.newImage}
         showModal={props.showModal}

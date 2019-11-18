@@ -45,7 +45,7 @@ const PhotoModal = (props: any) => {
 
   return (
     <Modal isVisible={props.showModal}>
-      <View style={Profile.ProfileView.Wrapper2}>
+      <View style={Profile.ProfileView.Content}>
         {uploadIcon}
         {previewImage}
         {actionable}

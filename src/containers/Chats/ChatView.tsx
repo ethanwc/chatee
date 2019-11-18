@@ -25,10 +25,14 @@ const ChatView = (props: any) => {
         props.leaveChat({removeuser: props.user.email, chatid: props.id})
       }
       name="remove"
-      size={40}
+      size={30}
       color={Control.Bar.Icon.color}
     />
   ) : null;
+
+  let lastMessage = chat.lastMessage && chat.lastMessage.includes('cloudinary')
+    ? 'Image'
+    : chat.lastMessage;
 
   return (
     <View style={Conversation.Conversation.Wrapper}>
@@ -55,7 +59,7 @@ const ChatView = (props: any) => {
               <Text style={Conversation.Conversation.TimeText}>{date}</Text>
               {leave}
             </View>
-            <Text style={{flexWrap: 'wrap'}}>{chat.lastMessage}</Text>
+            <Text style={{flexWrap: 'wrap'}}>{lastMessage}</Text>
           </View>
         </View>
       </TouchableNativeFeedback>

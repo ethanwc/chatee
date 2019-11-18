@@ -41,7 +41,6 @@ const ChatsView = (props: any) => {
               navigation={props.navigation}
               chat={item}
               id={item._id}
-              key={item._id}
               getChats={props.getChats}
               handleChatInvite={props.handleChatInvite}
             />

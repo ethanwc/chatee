@@ -30,6 +30,17 @@ const ControlMenu = (props: any) => {
 
         <TouchableNativeFeedback
           onPress={() => {
+            props.setActiveChild(false);
+            props.toggleMenu();
+          }}>
+          <View style={Control.Content.IconWrapper}>
+            <Icon name="message" size={40} color={Control.Content.Icon.color} />
+            <Text style={Control.Content.Description}>Messages</Text>
+          </View>
+        </TouchableNativeFeedback>
+
+        <TouchableNativeFeedback
+          onPress={() => {
             props.setActiveChild(true);
             props.toggleMenu();
           }}>
@@ -40,17 +51,6 @@ const ControlMenu = (props: any) => {
               color={Control.Content.Icon.color}
             />
             <Text style={Control.Content.Description}>Contacts</Text>
-          </View>
-        </TouchableNativeFeedback>
-
-        <TouchableNativeFeedback
-          onPress={() => {
-            props.setActiveChild(false);
-            props.toggleMenu();
-          }}>
-          <View style={Control.Content.IconWrapper}>
-            <Icon name="message" size={40} color={Control.Content.Icon.color} />
-            <Text style={Control.Content.Description}>Messages</Text>
           </View>
         </TouchableNativeFeedback>
       </View>

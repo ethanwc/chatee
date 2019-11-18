@@ -39,7 +39,6 @@ const MessageBar = (props: any) => {
 
       <View style={{flex: 6}}>
         <TextInput
-          multiline={true}
           placeholder="Enter a message"
           placeholderTextColor={Control.Bar.ChatInput.color}
           style={Control.Bar.Input}
@@ -50,7 +49,7 @@ const MessageBar = (props: any) => {
       <View style={{flex: 1}}>
         <Icon
           name="send"
-          size={40}
+          size={45}
           color={Control.Bar.Icon.color}
           onPress={() => handleSendMessage()}
         />

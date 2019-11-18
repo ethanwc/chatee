@@ -14,14 +14,17 @@ const ConversationView = (props: any) => {
     <Text style={{flexWrap: 'wrap'}}>{props.message.message}</Text>
   );
 
+  let imglocation =
+    props.message.picture && props.message.picture === 'unset'
+      ? require('../../assets/logo.png')
+      : {uri: props.message.picture};
+
   return (
     <View style={Conversation.Conversation.Wrapper}>
       <View style={Conversation.Conversation.Content}>
         <Image
           style={Conversation.Conversation.ContactImage}
-          source={{
-            uri: 'https://facebook.github.io/react-native/img/tiny_logo.png',
-          }}
+          source={imglocation}
         />
         <View style={Conversation.Conversation.MessageWrapper}>
           <View style={{flexDirection: 'row'}}>

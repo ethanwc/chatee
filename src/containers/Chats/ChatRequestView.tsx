@@ -12,7 +12,6 @@ const ChatRequestView = (props: any) => {
   const chat = props.chat;
   const date = chat.lastMessageDate || chat.createdDate;
 
-
   let accept = (
     <Icon
       onPress={() => props.handleChatInvite({accept: true, chatid: props.id})}
@@ -31,12 +30,17 @@ const ChatRequestView = (props: any) => {
     />
   );
 
+  const imglocation =
+    props.picture && props.picture === 'unset'
+      ? require('../../assets/logo.png')
+      : {uri: props.picture};
+
   return (
     <View style={Conversation.Conversation.Wrapper}>
       <View style={Conversation.Conversation.Content}>
         <Image
           style={Conversation.Conversation.ContactImage}
-          source={require('../../assets/logo.png')}
+          source={imglocation}
         />
 
         <View style={Conversation.Conversation.MessageWrapper}>

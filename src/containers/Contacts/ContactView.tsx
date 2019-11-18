@@ -12,15 +12,25 @@ const ContactView = (props: any) => {
       ? require('../../assets/logo.png')
       : {uri: props.picture};
 
+  /**
+   * Helper for contact press logic
+   */
+
+  const handleContactPress = () => {
+    //nav required
+    if (props.navigation) {
+      props.navigation.navigate('Profile', {
+        profileid: props.email,
+        reload: true,
+      });
+      //if it is opening a modal to display, close it so it doesnt cover nav
+      if (props.setShowModal) props.setShowModal(false);
+    }
+  };
   return (
     <TouchableWithoutFeedback
       style={Contact.ContactPreview.Content}
-      onPress={() =>
-        props.navigation.navigate('Profile', {
-          profileid: props.email,
-          reload: true,
-        })
-      }>
+      onPress={() => handleContactPress()}>
       <View style={Contact.ContactPreview.Wrapper}>
         <View style={Contact.ContactPreview.Content}>
           <Image style={Contact.ContactPreview.Image} source={imglocation} />

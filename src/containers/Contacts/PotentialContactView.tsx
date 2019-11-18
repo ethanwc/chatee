@@ -45,6 +45,7 @@ const PotentialContactView = (props: any) => {
     <View style={Contact.ContactPreview.Wrapper}>
       <View style={Contact.ContactPreview.Content}>
         <ContactView
+          setShowModal={props.setShowModal}
           navigation={props.navigation}
           name={props.name}
           email={props.email}

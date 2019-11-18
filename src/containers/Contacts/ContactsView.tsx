@@ -70,7 +70,7 @@ const ContactsView = (props: any) => {
     ) : null;
 
   let friendsView = (
-    <View style={{flex: 4}}>
+    <View style={Contact.ContactPreview.Wrapper}>
       <Text style={Contact.ContactPreview.HeaderText}>Friends</Text>
       <FlatList
         data={friends}

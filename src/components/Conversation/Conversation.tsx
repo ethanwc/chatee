@@ -289,10 +289,10 @@ const Conversation = (props: any) => {
   if (!conversation || !conversation.creator)
     return <ActivityIndicator size="large" color={Control.Bar.Icon.color} />;
   //make sure users are filtered based on chat
-  if (!filteredMembers){
+  if (!filteredMembers) {
     updateUsers();
-    return <Text>Loading</Text>;
-  } 
+    return <ActivityIndicator size="large" color={Control.Bar.Icon.color} />;
+  }
 
   return (
     <View style={{flex: 1}}>
@@ -315,7 +315,11 @@ const Conversation = (props: any) => {
         setSearch={setSearch}
         goesBack={true}
       />
-      <ConversationsView messages={conversation.messages} search={search} />
+      <ConversationsView
+        messages={conversation.messages}
+        search={search}
+        members={filteredMembers}
+      />
       <ContentBar
         showContent={showContent}
         setShowContent={setShowContent}

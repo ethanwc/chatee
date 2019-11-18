@@ -15,9 +15,9 @@ const ChatView = (props: any) => {
   const canLeave = props.chat.creator !== props.user.email;
 
   const imglocation =
-    props.user.profile.picture && props.user.profile.picture === 'unset'
+    props.picture && props.picture === 'unset'
       ? require('../../assets/logo.png')
-      : {uri: props.user.profile.picture};
+      : {uri: props.picture};
 
   let leave = canLeave ? (
     <Icon

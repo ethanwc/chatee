@@ -59,6 +59,7 @@ const SearchModal = (props: any) => {
                 />
               ) : (
                 <PotentialContactView
+                  setShowModal={props.setShowModal}
                   navigation={props.navigation}
                   picture={item.picture}
                   name={item.name}

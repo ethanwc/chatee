@@ -53,17 +53,6 @@ const ControlMenu = (props: any) => {
             <Text style={Control.Content.Description}>Messages</Text>
           </View>
         </TouchableNativeFeedback>
-
-        <TouchableNativeFeedback onPress={() => Alert.alert('pressed')}>
-          <View style={Control.Content.IconWrapper}>
-            <Icon
-              name="settings"
-              size={40}
-              color={Control.Content.Icon.color}
-            />
-            <Text style={Control.Content.Description}>Settings</Text>
-          </View>
-        </TouchableNativeFeedback>
       </View>
 
       <TouchableNativeFeedback

@@ -1,4 +1,3 @@
-import React, {useState, useEffect} from 'react';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Chats from './components/Chats/Chats';
@@ -9,6 +8,21 @@ import Holder from './components/Holder/Holder';
 import Info from './containers/Info/Info';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
+import Pushy from 'pushy-react-native';
+
+// Please place this code in App.js,
+// After the import statements, and before the Component class
+
+Pushy.setNotificationListener(async (data: {message: string}) => {
+  // Notification title
+  let notificationTitle = 'Chatee';
+
+  // Attempt to extract the "message" property from the payload: {"message":"Hello World!"}
+  let notificationText = data.message || '';
+
+  // Display basic system notification
+  Pushy.notify(notificationTitle, notificationText);
+});
 
 const AppNavigator = createStackNavigator({
   Login: {

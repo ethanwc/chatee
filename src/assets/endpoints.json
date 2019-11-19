@@ -1,8 +1,8 @@
 {
   "base": "https://chatee-api.azurewebsites.net",
   "cloudinary": "https://api.cloudinary.com/v1_1/dk4gnl6ww/image/upload",
-  "locationiq" : "https://us1.locationiq.com/v1/reverse.php?key=",
-  "locationiqkey" : "4605c6c380e996",
+  "locationiq": "https://us1.locationiq.com/v1/reverse.php?key=",
+  "locationiqkey": "4605c6c380e996",
   "auth": "auth",
   "version": "v1",
   "login": "login",
@@ -18,5 +18,6 @@
   "invite": "invite",
   "remove": "remove",
   "handleInvite": "handleInvite",
-  "messages": "messages"
+  "messages": "messages",
+  "device": "device"
 }

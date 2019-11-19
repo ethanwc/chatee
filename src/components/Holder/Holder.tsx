@@ -3,10 +3,19 @@ import Chats from '../Chats/Chats';
 import ControlBar from '../../containers/Control/ControlBar';
 import ControlMenu from '../../containers/Control/ControlMenu';
 import {Control} from '../../styles';
-import {View, ActivityIndicator, AsyncStorage, Alert, Text} from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  AsyncStorage,
+  Alert,
+  Text,
+  Platform,
+  PermissionsAndroid,
+} from 'react-native';
 import Contacts from '../Contacts/Contacts';
 import Endpoints from '../../assets/endpoints.json';
 import Axios from 'axios';
+import Pushy from 'pushy-react-native';
 
 /**
  * Holds various components inside the menu
@@ -18,6 +27,8 @@ const Holder = (props: any) => {
   const chatinfo_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.chats}/${Endpoints.all}`;
   //endpoint to get all users
   const endpoint_getusers = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.all}`;
+  //uri to register pushy token
+  const devicetoken_uri = `${Endpoints.base}/${Endpoints.version}/${Endpoints.users}/${Endpoints.device}`;
   //show menu if true
   const [showMenu, setShowMenu] = useState(false);
   //active child is either chats(false) or contacts(true)
@@ -32,6 +43,57 @@ const Holder = (props: any) => {
 
   //logged user info
   const userid = props.navigation.getParam('userid');
+
+  // Please place this code in App.js,
+  // After the import statements, and before the Component class
+
+  Pushy.setNotificationListener(async (data: {message: string}) => {
+    // Notification title
+    let notificationTitle = 'Chatee';
+
+    // Attempt to extract the "message" property from the payload: {"message":"Hello World!"}
+    let notificationText = data.message || '';
+
+    // Display basic system notification
+    Pushy.notify(notificationTitle, notificationText);
+  });
+
+  useEffect(() => {
+    getUser();
+    getUsers();
+    getChats();
+
+    Pushy.listen();
+    // Only necessary for Android
+    if (Platform.OS === 'android') {
+      // Check whether the user has granted the app the WRITE_EXTERNAL_STORAGE permission
+      PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      ).then(granted => {
+        if (!granted) {
+          // Request the WRITE_EXTERNAL_STORAGE permission so that the Pushy SDK will be able to persist the device token in the external storage
+          PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          ).then(result => {
+            // User denied permission?
+            if (result !== PermissionsAndroid.RESULTS.GRANTED) {
+              // Possibly ask the user to grant the permission
+            }
+          });
+        }
+      });
+    }
+
+    // Register the device for push notifications
+    Pushy.register()
+      .then(async (deviceToken: string) => {
+        registerDevice(deviceToken);
+      })
+      .catch((err: any) => {
+        // Handle registration errors
+        Alert.alert('Pushy error', err);
+      });
+  }, []);
 
   /**
    * Get logged user information
@@ -80,12 +142,16 @@ const Holder = (props: any) => {
     if (data) setUserChats(data);
   };
 
-  useEffect(() => {
-    getUser();
-    getUsers();
-    getChats();
-  }, []);
-
+  /**
+   * Register device token
+   */
+  const registerDevice = async (token: any) => {
+    await Axios.get(`${devicetoken_uri}/${token}`, {
+      headers: {
+        'x-access-token': await AsyncStorage.getItem('JWT'),
+      },
+    });
+  };
   if (!user)
     return <ActivityIndicator size="large" color={Control.Bar.Icon.color} />;
 
